@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard | MJW'S SHAKE &amp; SPICY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="/js/toast.js" defer></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-dim": "#5A28A0",
+                        "primary-fixed": "#B497E0",
+                        "surface-container-highest": "#B497E0",
+                        "surface": "#F8F7FB",
+                        "on-primary": "#FFFFFF",
+                        "background": "#F8F7FB",
+                        "on-primary-fixed": "#FFFFFF",
+                        "surface-bright": "#F8F7FB",
+                        "primary-container": "#B497E0",
+                        "on-surface-variant": "#6B6B6B",
+                        "outline-variant": "#733CC3",
+                        "on-surface": "#3B1E54",
+                        "error": "#FF6B3D",
+                        "on-tertiary-fixed-variant": "#3B1E54",
+                        "secondary": "#9D79D3",
+                        "tertiary-fixed-dim": "#F4C542",
+                        "surface-container-low": "#F8F7FB",
+                        "tertiary": "#C48F00",
+                        "on-secondary-container": "#3B1E54",
+                        "surface-container-high": "#F0E8FF",
+                        "primary": "#733CC3",
+                        "inverse-on-surface": "#6B6B6B",
+                        "error-container": "#FF6B3D",
+                        "on-tertiary": "#3B1E54",
+                        "secondary-fixed": "#9D79D3",
+                        "on-secondary": "#3B1E54",
+                        "tertiary-container": "#C48F00",
+                        "on-secondary-fixed": "#3B1E54",
+                        "error-dim": "#FF6B3D",
+                        "surface-dim": "#B497E0",
+                        "on-secondary-fixed-variant": "#3B1E54",
+                        "on-tertiary-container": "#3B1E54",
+                        "inverse-primary": "#733CC3",
+                        "on-error-container": "#3B1E54",
+                        "surface-variant": "#B497E0",
+                        "secondary-container": "#F0E8FF",
+                        "on-primary-fixed-variant": "#B497E0",
+                        "outline": "#9D79D3",
+                        "secondary-fixed-dim": "#F0E8FF",
+                        "tertiary-dim": "#F4C542",
+                        "secondary-dim": "#F0E8FF",
+                        "on-tertiary-fixed": "#3B1E54",
+                        "tertiary-fixed": "#C48F00",
+                        "surface-container-lowest": "#FFFFFF",
+                        "on-primary-container": "#FFFFFF",
+                        "inverse-surface": "#3B1E54",
+                        "primary-fixed-dim": "#B497E0",
+                        "surface-tint": "#733CC3",
+                        "surface-container": "#F0E8FF",
+                        "on-error": "#FFFFFF",
+                        "on-background": "#3B1E54"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8F7FB;
+        }
+        h1, h2, h3, .headline {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<%
+    const safeProfileCompletion =
+        typeof profileCompletion !== 'undefined' && Number.isFinite(profileCompletion)
+            ? profileCompletion
+            : 0;
+%>
+<!-- TopAppBar -->
+<header class="bg-[#F8F7FB]/80 dark:bg-stone-900/80 backdrop-blur-xl fixed top-0 w-full z-50 flex items-center justify-between px-8 py-6 shadow-[0_10px_30px_rgba(59,30,84,0.04)]">
+    <div class="flex items-center gap-4">
+        <span onclick="document.getElementById('mobile-sidebar').classList.remove('hidden')" class="material-symbols-outlined text-[#733CC3] dark:text-[#B497E0] hover:opacity-80 transition-opacity cursor-pointer">menu</span>
+        <h1 onclick="window.location.href='/'" class="cursor-pointer text-2xl font-bold tracking-tighter text-[#733CC3] dark:text-[#B497E0] font-headline">MJW'S SHAKE & SPICY</h1>
+    </div>
+    <div class="hidden md:flex gap-8 font-headline font-bold items-center">
+        <a class="text-[#3B1E54] dark:text-[#F0E8FF] hover:text-primary transition-colors" href="/">Home</a>
+        <a class="text-[#3B1E54] dark:text-[#F0E8FF] hover:text-primary transition-colors" href="/menu">Menu</a>
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold border-2 border-primary-container">
+            <%= user.name ? user.name.charAt(0).toUpperCase() : 'U' %>
+        </div>
+    </div>
+</header>
+
+<div class="flex min-h-screen pt-32 pb-24 px-4 md:px-8 gap-8">
+    <!-- Main Content Canvas -->
+    <main class="flex-1 space-y-8 max-w-5xl mx-auto">
+        <!-- Profile Header with Tabs -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 bg-white p-8 rounded-[3rem] shadow-sm border border-primary/5">
+            <div class="flex items-center gap-6">
+                <div class="w-20 h-20 rounded-full bg-primary/5 flex items-center justify-center border-4 border-white shadow-lg">
+                    <span class="text-primary text-3xl font-black font-headline"><%= user.name ? user.name.charAt(0).toUpperCase() : 'U' %></span>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-black font-headline text-on-surface"><%= user.name %></h2>
+                    <p class="text-on-surface-variant font-medium text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">mail</span> <%= user.email %>
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <% if (user.phone) { %>
+                            <span class="px-3 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-black tracking-wide"><%= user.phone %></span>
+                        <% } %>
+                        <% if (user.city) { %>
+                            <span class="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-[11px] font-black tracking-wide"><%= user.city %><%= user.state ? `, ${user.state}` : '' %></span>
+                        <% } %>
+                        <% if (user.favoriteCategory) { %>
+                            <span class="px-3 py-1 rounded-full bg-tertiary/10 text-[#8a6500] text-[11px] font-black tracking-wide">Loves <%= user.favoriteCategory %></span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-2 p-1 bg-surface-container-high/30 rounded-2xl w-fit">
+                <button onclick="switchTab('overview')" id="btn-overview" class="tab-btn active-tab px-6 py-2 rounded-xl font-bold transition-all text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">dashboard</span> Overview
+                </button>
+                <button onclick="switchTab('orders')" id="btn-orders" class="tab-btn px-6 py-2 rounded-xl font-bold transition-all text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">receipt_long</span> Orders
+                </button>
+                <button onclick="switchTab('edit')" id="btn-edit" class="tab-btn px-6 py-2 rounded-xl font-bold transition-all text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">edit</span> Edit
+                </button>
+            </div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="tab-overview" class="tab-content active-content space-y-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-surface-container-lowest border border-primary/5 p-8 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+                        <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    </div>
+                    <div>
+                        <p class="text-on-surface-variant text-xs font-black uppercase tracking-widest">Total Orders</p>
+                        <p class="text-4xl font-black font-headline text-on-surface mt-1"><%= orders.length %></p>
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest border border-primary/5 p-8 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all shadow-sm">
+                    <div class="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6">
+                        <span class="material-symbols-outlined text-2xl">payments</span>
+                    </div>
+                    <div>
+                        <p class="text-on-surface-variant text-xs font-black uppercase tracking-widest">Total Spent</p>
+                        <p class="text-4xl font-black font-headline text-on-surface mt-1">₹<%= totalSpent %></p>
+                    </div>
+                </div>
+                <div class="bg-primary p-8 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all shadow-xl shadow-primary/20 text-white cursor-pointer" onclick="window.location.href='/menu'">
+                    <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-2xl">add_shopping_cart</span>
+                    </div>
+                    <div>
+                        <p class="text-white/60 text-xs font-black uppercase tracking-widest">New Order</p>
+                        <p class="text-2xl font-black font-headline mt-1">Order Shakes Now</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-primary/5 p-8 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all shadow-sm">
+                    <div class="w-12 h-12 bg-tertiary/10 rounded-2xl flex items-center justify-center text-tertiary mb-6">
+                        <span class="material-symbols-outlined text-2xl">badge</span>
+                    </div>
+                    <div>
+                        <p class="text-on-surface-variant text-xs font-black uppercase tracking-widest">Profile Completion</p>
+                        <p class="text-4xl font-black font-headline text-on-surface mt-1"><%= safeProfileCompletion %>%</p>
+                        <div class="mt-4 h-2.5 rounded-full bg-surface-container overflow-hidden">
+                            <div class="h-full rounded-full bg-gradient-to-r from-primary to-secondary" style="width: <%= safeProfileCompletion %>%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white border border-primary/5 p-8 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+                        <span class="material-symbols-outlined text-2xl">calendar_month</span>
+                    </div>
+                    <div>
+                        <p class="text-on-surface-variant text-xs font-black uppercase tracking-widest">Member Since</p>
+                        <p class="text-2xl font-black font-headline text-on-surface mt-1"><%= new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-6">
+                <div class="bg-white border border-primary/5 p-8 rounded-[2.5rem] shadow-sm">
+                    <h3 class="text-xl font-black font-headline text-on-surface mb-6">Saved Delivery Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="rounded-3xl bg-surface-container-low p-5">
+                            <p class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Address</p>
+                            <p class="text-sm font-bold text-on-surface leading-6"><%= user.addressLine1 || 'Add your main delivery address' %></p>
+                            <% if (user.addressLine2) { %><p class="text-sm text-on-surface-variant mt-1"><%= user.addressLine2 %></p><% } %>
+                        </div>
+                        <div class="rounded-3xl bg-surface-container-low p-5">
+                            <p class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Location</p>
+                            <p class="text-sm font-bold text-on-surface"><%= [user.city, user.state].filter(Boolean).join(', ') || 'City and state not added yet' %></p>
+                            <p class="text-sm text-on-surface-variant mt-1"><%= user.pincode || 'Pincode missing' %></p>
+                            <% if (user.landmark) { %><p class="text-sm text-on-surface-variant mt-2">Near <%= user.landmark %></p><% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white border border-primary/5 p-8 rounded-[2.5rem] shadow-sm">
+                    <h3 class="text-xl font-black font-headline text-on-surface mb-6">Taste Profile</h3>
+                    <div class="space-y-4">
+                        <div class="rounded-3xl bg-primary/5 p-5">
+                            <p class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Favorite Category</p>
+                            <p class="text-sm font-bold text-on-surface"><%= user.favoriteCategory || 'Not chosen yet' %></p>
+                        </div>
+                        <div class="rounded-3xl bg-secondary/10 p-5">
+                            <p class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Spice Preference</p>
+                            <p class="text-sm font-bold text-on-surface"><%= user.spicePreference || 'Not set yet' %></p>
+                        </div>
+                        <div class="rounded-3xl bg-tertiary/10 p-5">
+                            <p class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Dietary Preference</p>
+                            <p class="text-sm font-bold text-on-surface"><%= user.dietaryPreference || 'No preference saved' %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="tab-orders" class="tab-content space-y-6">
+            <h3 class="text-2xl font-black font-headline flex items-center gap-3">
+                <span class="w-2 h-8 bg-primary rounded-full"></span> Order History
+            </h3>
+            <div class="space-y-6">
+                <% if (orders && orders.length > 0) { %>
+                    <% orders.forEach(order => { %>
+                        <div class="bg-white border border-primary/5 rounded-[2.5rem] shadow-sm hover:shadow-md transition-all overflow-hidden group">
+                            <!-- Order Header (Clickable) -->
+                            <div onclick="toggleOrderDetails('<%= order._id %>')" class="p-6 md:p-8 flex flex-col md:flex-row justify-between gap-6 cursor-pointer hover:bg-primary/5 transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                        <span class="material-symbols-outlined text-3xl">receipt_long</span>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-3 mb-1">
+                                            <span class="font-black text-on-surface text-lg">#<%= order._id.toString().slice(-6).toUpperCase() %></span>
+                                            <span class="px-4 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full tracking-widest">
+                                                <%= order.status %>
+                                            </span>
+                                        </div>
+                                        <p class="text-sm text-on-surface-variant font-medium">Placed on <%= new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-6">
+                                    <div class="text-right">
+                                        <p class="text-2xl font-black text-primary">₹<%= order.totalAmount %></p>
+                                        <p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-black"><%= order.items.length %> Items</p>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all transform" id="chevron-<%= order._id %>">
+                                        <span class="material-symbols-outlined text-sm">expand_more</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Expandable Details -->
+                            <div id="details-<%= order._id %>" class="hidden border-t border-primary/5 bg-[#F8F7FB]/50">
+                                <div class="p-8 space-y-10">
+                                    <!-- Tracking Timeline -->
+                                    <div class="relative pt-4">
+                                        <div class="absolute top-1/2 left-0 w-full h-1 bg-surface-container-high -translate-y-1/2"></div>
+                                        <div class="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 transition-all duration-1000" 
+                                             style="width: <%= order.status === 'Delivered' ? '100%' : (order.status === 'Preparing' ? '66%' : (order.status === 'Confirmed' ? '33%' : '0%')) %>"></div>
+                                        <div class="relative flex justify-between items-center z-10">
+                                            <% ['Pending', 'Confirmed', 'Preparing', 'Delivered'].forEach((step, idx) => { 
+                                                const isActive = order.status === step || (idx < ['Pending', 'Confirmed', 'Preparing', 'Delivered'].indexOf(order.status));
+                                                const isCurrent = order.status === step;
+                                            %>
+                                                <div class="flex flex-col items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 <%= isActive ? 'bg-primary text-white scale-110 shadow-lg shadow-primary/20' : 'bg-white border-2 border-surface-container text-stone-300' %>">
+                                                        <span class="material-symbols-outlined text-sm"><%= idx === 0 ? 'schedule' : (idx === 1 ? 'check_circle' : (idx === 2 ? 'restaurant' : 'home')) %></span>
+                                                    </div>
+                                                    <span class="text-[10px] font-black uppercase tracking-widest <%= isActive ? 'text-primary' : 'text-stone-300' %> <%= isCurrent ? 'animate-pulse' : '' %>"><%= step %></span>
+                                                </div>
+                                            <% }) %>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item Summary -->
+                                    <div class="space-y-4">
+                                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-on-surface-variant flex items-center gap-2">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Order Summary
+                                        </h4>
+                                        <div class="bg-white rounded-3xl p-6 space-y-4 shadow-sm">
+                                            <% order.items.forEach(item => { %>
+                                                <div class="flex justify-between items-center py-2 border-b border-primary/5 last:border-0">
+                                                    <div class="flex items-center gap-4">
+                                                        <span class="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary font-black text-xs"><%= item.quantity %>x</span>
+                                                        <div>
+                                                            <p class="font-bold text-on-surface text-sm"><%= item.productName %></p>
+                                                            <% if (item.options) { %><p class="text-[10px] text-on-surface-variant font-medium">Option: <%= item.options %></p><% } %>
+                                                        </div>
+                                                    </div>
+                                                    <p class="font-black text-on-surface">₹<%= item.priceAtPurchase * item.quantity %></p>
+                                                </div>
+                                            <% }) %>
+                                            <div class="pt-4 flex justify-between items-center">
+                                                <p class="text-sm font-black text-on-surface-variant">Paid via <%= order.paymentMethod || 'Cash on Delivery' %></p>
+                                                <div class="text-right">
+                                                    <p class="text-[10px] font-black text-on-surface-variant uppercase">Total Amount</p>
+                                                    <p class="text-2xl font-black text-primary">₹<%= order.totalAmount %></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="text-center py-20 bg-surface-container-low rounded-[3rem] border border-dashed border-primary/20">
+                        <span class="material-symbols-outlined text-6xl text-primary/20 mb-4">no_food</span>
+                        <h4 class="text-xl font-black text-on-surface-variant">No orders yet</h4>
+                        <a href="/menu" class="mt-6 inline-block px-8 py-3 bg-primary text-white rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Go to Menu</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Edit Tab -->
+        <div id="tab-edit" class="tab-content">
+            <div class="bg-white border border-primary/5 p-8 md:p-12 rounded-[3rem] shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                    <div>
+                        <h3 class="text-2xl font-black font-headline">Profile Settings</h3>
+                        <p class="text-on-surface-variant mt-2 max-w-2xl">Add personal, delivery, and taste details so checkout feels faster and your profile feels complete.</p>
+                    </div>
+                    <div class="px-5 py-3 rounded-2xl bg-primary/5 border border-primary/10">
+                        <p class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant">Completion</p>
+                        <p class="text-2xl font-black font-headline text-primary"><%= safeProfileCompletion %>%</p>
+                    </div>
+                </div>
+                <form id="editProfileForm" class="space-y-10">
+                    <section class="space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center material-symbols-outlined">person</span>
+                            <div>
+                                <h4 class="text-lg font-black font-headline">Personal Details</h4>
+                                <p class="text-sm text-on-surface-variant">Basic details for your account identity.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Full Name</label>
+                                <input type="text" name="name" value="<%= user.name || '' %>" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Phone Number</label>
+                                <input type="tel" name="phone" value="<%= user.phone || '' %>" placeholder="+91 98765 43210" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Email Address</label>
+                                <input type="email" value="<%= user.email %>" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none opacity-50 cursor-not-allowed text-on-surface font-bold" disabled>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Date of Birth</label>
+                                <input type="date" name="dateOfBirth" value="<%= user.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : '' %>" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2 md:col-span-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Short Bio</label>
+                                <textarea name="bio" rows="3" maxlength="180" placeholder="Tell us what you usually crave or how you like your orders." class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold resize-none"><%= user.bio || '' %></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-2xl bg-secondary/15 text-secondary flex items-center justify-center material-symbols-outlined">home_pin</span>
+                            <div>
+                                <h4 class="text-lg font-black font-headline">Delivery Details</h4>
+                                <p class="text-sm text-on-surface-variant">Save a ready-to-use address for faster ordering.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2 md:col-span-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Address Line 1</label>
+                                <input type="text" name="addressLine1" value="<%= user.addressLine1 || '' %>" placeholder="Flat / House number, street" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2 md:col-span-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Address Line 2</label>
+                                <input type="text" name="addressLine2" value="<%= user.addressLine2 || '' %>" placeholder="Area, floor, apartment, office details" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">City</label>
+                                <input type="text" name="city" value="<%= user.city || '' %>" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">State</label>
+                                <input type="text" name="state" value="<%= user.state || '' %>" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Pincode</label>
+                                <input type="text" name="pincode" value="<%= user.pincode || '' %>" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Landmark</label>
+                                <input type="text" name="landmark" value="<%= user.landmark || '' %>" placeholder="Near metro / mall / office" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-2xl bg-tertiary/15 text-[#8a6500] flex items-center justify-center material-symbols-outlined">restaurant</span>
+                            <div>
+                                <h4 class="text-lg font-black font-headline">Food Preferences</h4>
+                                <p class="text-sm text-on-surface-variant">Make your profile feel personal with a few taste cues.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Favorite Category</label>
+                                <select name="favoriteCategory" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                                    <option value="">Select one</option>
+                                    <% ['Shakes', 'Pizza', 'Burgers', 'Sandwiches', 'Snacks'].forEach(category => { %>
+                                        <option value="<%= category %>" <%= user.favoriteCategory === category ? 'selected' : '' %>><%= category %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Spice Preference</label>
+                                <select name="spicePreference" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                                    <option value="">Select level</option>
+                                    <% ['Mild', 'Medium', 'Spicy', 'Extra Spicy'].forEach(level => { %>
+                                        <option value="<%= level %>" <%= user.spicePreference === level ? 'selected' : '' %>><%= level %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-on-surface-variant ml-2">Dietary Preference</label>
+                                <select name="dietaryPreference" class="w-full px-6 py-4 bg-surface-container rounded-2xl border-none focus:ring-4 focus:ring-primary/10 text-on-surface font-bold">
+                                    <option value="">Select preference</option>
+                                    <% ['Vegetarian', 'Eggetarian', 'No Preference'].forEach(preference => { %>
+                                        <option value="<%= preference %>" <%= user.dietaryPreference === preference ? 'selected' : '' %>><%= preference %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <button id="saveProfileButton" type="submit" class="w-full md:w-auto px-10 py-4 bg-primary text-white rounded-full font-black text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-8">
+                        <span class="material-symbols-outlined text-base">save</span>
+                        <span>Save Changes</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<style>
+    .tab-btn { color: rgba(59, 30, 84, 0.6); }
+    .active-tab { background: #733CC3; color: white; box-shadow: 0 10px 20px rgba(115, 60, 195, 0.2); }
+    .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+    .active-content { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script>
+    function notifyProfile(title, message, type = 'success') {
+        if (typeof window.showToast === 'function') {
+            window.showToast(title, message, type);
+            return;
+        }
+
+        window.alert(message ? `${title}\n${message}` : title);
+    }
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-content'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+        document.getElementById('tab-' + tabId).classList.add('active-content');
+        document.getElementById('btn-' + tabId).classList.add('active-tab');
+    }
+
+    function toggleOrderDetails(orderId) {
+        const details = document.getElementById('details-' + orderId);
+        const chevron = document.getElementById('chevron-' + orderId);
+        
+        if (details.classList.contains('hidden')) {
+            details.classList.remove('hidden');
+            chevron.style.transform = 'rotate(180deg)';
+        } else {
+            details.classList.add('hidden');
+            chevron.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    document.getElementById('editProfileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const submitButton = document.getElementById('saveProfileButton');
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="material-symbols-outlined animate-spin text-base">sync</span><span>Saving...</span>';
+
+        try {
+            const res = await fetch('/api/user/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+
+            if (res.ok && data.success && data.user) {
+                notifyProfile('Profile Updated', 'Your account details were saved successfully.', 'success');
+                setTimeout(() => window.location.reload(), 900);
+                return;
+            }
+
+            notifyProfile('Could Not Save Profile', data.error || 'Please try again.', 'error');
+        } catch (err) {
+            notifyProfile('Error Updating Profile', 'Please try again in a moment.', 'error');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<span class="material-symbols-outlined text-base">save</span><span>Save Changes</span>';
+        }
+    });
+</script>
+<!-- Floating Action Button (Only on Mobile for easy Menu access) -->
+<%- include('sidebar') %>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MJW'S SHAKE &amp; SPICY - Your Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be_Vietnam_Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="/js/toast.js" defer></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#9D79D3",
+                        "on-primary-fixed-variant": "#B497E0",
+                        "surface-variant": "#B497E0",
+                        "secondary-container": "#F0E8FF",
+                        "secondary-dim": "#F0E8FF",
+                        "tertiary-dim": "#F4C542",
+                        "secondary-fixed-dim": "#F0E8FF",
+                        "on-secondary-fixed": "#3B1E54",
+                        "error-dim": "#FF6B3D",
+                        "tertiary-container": "#C48F00",
+                        "on-secondary": "#3B1E54",
+                        "secondary-fixed": "#9D79D3",
+                        "on-error-container": "#3B1E54",
+                        "inverse-primary": "#733CC3",
+                        "on-tertiary-container": "#3B1E54",
+                        "on-secondary-fixed-variant": "#3B1E54",
+                        "surface-dim": "#B497E0",
+                        "surface-tint": "#733CC3",
+                        "surface-container": "#F0E8FF",
+                        "on-error": "#FFFFFF",
+                        "on-background": "#3B1E54",
+                        "primary-fixed-dim": "#B497E0",
+                        "inverse-surface": "#3B1E54",
+                        "tertiary-fixed": "#C48F00",
+                        "surface-container-lowest": "#FFFFFF",
+                        "on-primary-container": "#FFFFFF",
+                        "on-tertiary-fixed": "#3B1E54",
+                        "on-primary-fixed": "#FFFFFF",
+                        "background": "#F8F7FB",
+                        "on-primary": "#FFFFFF",
+                        "surface": "#F8F7FB",
+                        "on-surface-variant": "#6B6B6B",
+                        "primary-container": "#B497E0",
+                        "surface-bright": "#F8F7FB",
+                        "primary-dim": "#5A28A0",
+                        "surface-container-highest": "#B497E0",
+                        "primary-fixed": "#B497E0",
+                        "on-secondary-container": "#3B1E54",
+                        "tertiary": "#C48F00",
+                        "surface-container-low": "#F8F7FB",
+                        "on-tertiary": "#3B1E54",
+                        "surface-container-high": "#F0E8FF",
+                        "primary": "#733CC3",
+                        "inverse-on-surface": "#6B6B6B",
+                        "error-container": "#FF6B3D",
+                        "secondary": "#9D79D3",
+                        "on-tertiary-fixed-variant": "#3B1E54",
+                        "outline-variant": "#733CC3",
+                        "on-surface": "#3B1E54",
+                        "error": "#FF6B3D",
+                        "tertiary-fixed-dim": "#F4C542"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift {
+            background: linear-gradient(180deg, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
+        }
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 w-full z-50 bg-[#F8F7FB]/80 dark:bg-stone-900/80 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button onclick="document.getElementById('mobile-sidebar').classList.remove('hidden')" class="text-primary p-2 hover:scale-110 transition-transform active:scale-95">
+    <span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<button onclick="window.history.back()" class="text-[#733CC3] dark:text-[#B497E0] hover:scale-105 transition-transform duration-200 Active: scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+</div>
+<h1 class="text-[#733CC3] dark:text-[#B497E0] font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-xl">Your Cart</h1>
+<div class="flex items-center gap-4">
+    <div class="relative hover:scale-105 transition-transform duration-200">
+        <span class="material-symbols-outlined text-[#733CC3] dark:text-[#B497E0]" data-icon="shopping_bag">shopping_bag</span>
+        <span class="absolute -top-1 -right-1 bg-secondary text-on-secondary text-[10px] font-bold px-1.5 py-0.5 rounded-full"><%= cartCount %></span>
+    </div>
+</div>
+</div>
+</header>
+<main class="flex-1 pt-24 pb-40 px-4 max-w-2xl mx-auto w-full">
+<!-- Editorial Section Label -->
+<div class="mb-8 ml-2">
+<p class="font-headline uppercase text-xs tracking-[0.2em] text-secondary font-bold mb-1">Check your flavors</p>
+<h2 class="text-3xl font-headline font-extrabold text-on-surface leading-tight">Order Summary</h2>
+</div>
+
+<!-- Payment Method Selector -->
+<div class="mb-10 p-6 bg-white rounded-2xl border border-primary/10 shadow-sm">
+    <p class="text-xs font-black uppercase tracking-widest text-secondary mb-4">Choose Payment Method</p>
+    <div class="grid grid-cols-2 gap-4">
+        <!-- COD Option -->
+        <div class="relative">
+            <input type="radio" id="payment-cod" name="paymentMethod" value="cod" class="sr-only peer">
+            <label for="payment-cod" class="cursor-pointer flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-surface-container-highest bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                <span class="material-symbols-outlined text-2xl text-on-surface-variant peer-checked:text-primary">payments</span>
+                <span class="text-xs font-bold text-on-surface">Cash on Delivery</span>
+            </label>
+        </div>
+        <!-- Online Option -->
+        <div class="relative">
+            <input type="radio" id="payment-online" name="paymentMethod" value="online" class="sr-only peer">
+            <label for="payment-online" class="cursor-pointer flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-surface-container-highest bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                <span class="material-symbols-outlined text-2xl text-on-surface-variant peer-checked:text-primary">account_balance_wallet</span>
+                <span class="text-xs font-bold text-on-surface">Pay Online</span>
+            </label>
+        </div>
+    </div>
+</div>
+<% if (cartItems && cartItems.length > 0) { %>
+<div class="space-y-6" id="cart-list">
+    <% cartItems.forEach(item => { %>
+    <!-- Item -->
+    <div class="group relative bg-surface-container-low rounded-xl p-4 flex gap-4 transition-all hover:bg-surface-container">
+        <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+            <% 
+                let defaultImg = 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'; // Shake default
+                if (item.product.category === 'Pizza') defaultImg = 'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                if (item.product.category === 'Burgers') defaultImg = 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                if (item.product.category === 'Sandwiches') defaultImg = 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                if (item.product.category === 'Snacks') defaultImg = 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+            %>
+            <img class="w-full h-full object-cover" src="<%= item.product.imageUrl || defaultImg %>" alt="<%= item.product.name %>">
+        </div>
+        <div class="flex-1 flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start">
+                    <h3 class="font-headline font-bold text-lg text-on-surface leading-tight"><%= item.product.name %></h3>
+                    <button onclick="updateCart('<%= item._id %>', 'remove')" class="text-outline-variant hover:text-error transition-colors">
+                        <span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+                    </button>
+                </div>
+                <% if (item.options) { %><p class="text-sm text-on-surface-variant font-medium">With <%= item.options %></p><% } %>
+                <% if (item.addons && (item.addons.extraCheese || item.addons.veggies)) { %>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase tracking-tighter">Customized</span>
+                        <% if (item.addons.extraCheese) { %>
+                            <span class="text-[10px] text-on-surface-variant font-bold bg-surface-container px-2 py-0.5 rounded-full border border-primary/5">+ Extra Cheese</span>
+                        <% } %>
+                        <% if (item.addons.veggies) { %>
+                            <span class="text-[10px] text-on-surface-variant font-bold bg-surface-container px-2 py-0.5 rounded-full border border-primary/5">+ Veggies</span>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="font-headline font-extrabold text-primary text-xl">₹<%= item.finalPrice || item.product.price %></span>
+                <div class="flex items-center bg-surface-container-highest rounded-full px-2 py-1 gap-3">
+                    <button onclick="updateCart('<%= item._id %>', 'decrease')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-lowest text-on-surface hover:bg-primary hover:text-on-primary transition-all shadow-sm">
+                        <span class="material-symbols-outlined text-base" data-icon="remove">remove</span>
+                    </button>
+                    <span class="font-bold text-on-surface min-w-[1rem] text-center"><%= item.quantity %></span>
+                    <button onclick="updateCart('<%= item._id %>', 'increase')" class="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-on-primary hover:bg-primary-dim transition-all shadow-sm">
+                        <span class="material-symbols-outlined text-base" data-icon="add">add</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</div>
+
+<!-- Bill Details -->
+<section class="mt-12 bg-white/40 backdrop-blur-md rounded-xl p-6 space-y-4">
+    <h4 class="font-headline font-bold text-sm uppercase tracking-widest text-on-surface-variant mb-4">Payment Details</h4>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Subtotal</span>
+        <span class="font-bold text-on-surface">₹<%= subtotal %></span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant font-medium">Delivery Fee</span>
+        <span class="font-bold text-tertiary">FREE</span>
+    </div>
+    <div class="pt-4 mt-4 border-t-2 border-dashed border-surface-container-highest flex justify-between items-center">
+        <span class="text-lg font-headline font-bold text-on-surface">Total Amount</span>
+        <span class="text-2xl font-headline font-black text-primary">₹<%= subtotal %></span>
+    </div>
+</section>
+
+<% } else { %>
+<!-- Empty State -->
+<div class="flex flex-col items-center justify-center py-20 text-center" id="empty-cart">
+    <div class="w-32 h-32 bg-surface-container-low rounded-full flex items-center justify-center mb-6">
+        <span class="material-symbols-outlined text-6xl text-outline-variant" data-icon="shopping_cart_off">shopping_cart_off</span>
+    </div>
+    <h3 class="text-2xl font-headline font-bold text-on-surface mb-2">Your cart is empty</h3>
+    <p class="text-on-surface-variant mb-8 max-w-[200px]">Looks like you haven't added any flavor to your cart yet.</p>
+    <button onclick="window.location.href='/menu'" class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+        Go to Menu
+    </button>
+</div>
+<% } %>
+<div class="mt-8 flex items-center gap-3 p-4 bg-secondary-container/30 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<p class="text-xs font-medium text-on-secondary-container">Add more items worth ₹190 to get a free 'Spicy Wing' chip!</p>
+</div>
+</main>
+<!-- Fixed Bottom Action -->
+<div class="fixed bottom-0 left-0 w-full p-6 bg-[#F8F7FB]/80 backdrop-blur-xl z-40">
+<div class="max-w-2xl mx-auto">
+<% if (cartItems && cartItems.length > 0) { %>
+<button
+    id="place-order-btn"
+    onclick="handlePlaceOrder(event)"
+    class="w-full py-5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-extrabold text-lg shadow-xl shadow-primary/25 flex items-center justify-center gap-3 group transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+>
+<span>Place Order</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<% } %>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full rounded-t-[3rem] mt-auto bg-[#F0E8FF] dark:bg-stone-950 pb-24">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-12 w-full font-['Be_Vietnam_Pro'] text-sm text-[#3B1E54] dark:text-white/80">
+    <div class="text-center md:text-left mb-6 md:mb-0">
+        <span class="text-lg font-black tracking-tighter">MJW'S SHAKE & SPICY</span>
+        <p class="text-[10px] opacity-40 uppercase tracking-[0.3em] font-bold">© 2024 ALL RIGHTS RESERVED.</p>
+    </div>
+    
+    <div class="flex flex-col items-center gap-1">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-[#733CC3]">Kitchen Hours</span>
+        <div class="flex gap-4 text-xs font-medium">
+            <p>Mon-Sat: <span class="font-bold">10 AM - 11 PM</span></p>
+            <p>Sun: <span class="font-bold">10 AM - 9 PM</span></p>
+        </div>
+    </div>
+</div>
+</footer>
+<script>
+let isCheckoutProcessing = false;
+
+function showCheckoutPopup(title, message = '', type = 'info') {
+    if (typeof window.showToast === 'function') {
+        window.showToast(title, message, type);
+        return;
+    }
+
+    window.alert(message ? `${title}\n${message}` : title);
+}
+
+function getPlaceOrderButton() {
+    return document.getElementById('place-order-btn');
+}
+
+function setPlaceOrderLoading(message) {
+    const btn = getPlaceOrderButton();
+    if (!btn) return;
+
+    btn.disabled = true;
+    btn.innerHTML = `<span class="animate-spin material-symbols-outlined">sync</span><span>${message}</span>`;
+}
+
+function resetPlaceOrderButton() {
+    const btn = getPlaceOrderButton();
+    if (!btn) return;
+
+    btn.disabled = false;
+    btn.innerHTML = `
+        <span>Place Order</span>
+        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+    `;
+}
+
+function getSelectedPaymentMethod() {
+    const allRadios = document.getElementsByName('paymentMethod');
+    return Array.from(allRadios).find(radio => radio.checked)?.value || null;
+}
+
+async function updateCart(itemId, action) {
+    try {
+        const res = await fetch('/api/cart/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ itemId, action })
+        });
+        if(res.ok) {
+            window.location.reload(); 
+        } else {
+            alert('Error updating cart');
+        }
+    } catch(e) { console.error(e); }
+}
+
+async function handlePlaceOrder(event) {
+    event.preventDefault();
+
+    if (isCheckoutProcessing) {
+        return;
+    }
+
+    const paymentMethod = getSelectedPaymentMethod();
+    if (!paymentMethod) {
+        showCheckoutPopup('Select Payment Method', 'Choose COD or Pay Online to continue.', 'info');
+        return;
+    }
+
+    console.log("[CHECKOUT] Final Selection:", paymentMethod);
+    isCheckoutProcessing = true;
+    setPlaceOrderLoading(paymentMethod === 'online' ? 'Opening Payment...' : 'Placing Order...');
+
+    if (paymentMethod === 'cod') {
+        await placeOrder({ paymentMethod: 'cod' });
+        return;
+    }
+
+    await initiatePayment();
+}
+
+async function initiatePayment() {
+    try {
+        const res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paymentMethod: 'online' })
+        });
+        const data = await res.json();
+        console.log("[CHECKOUT] Online checkout response:", data);
+
+        if (!res.ok || data.status !== 'requires_payment' || !data.rzpOrder?.id) {
+            throw new Error(data.error || 'Unable to initiate payment');
+        }
+
+        const options = {
+            key: data.key,
+            amount: data.rzpOrder.amount,
+            currency: data.rzpOrder.currency || "INR",
+            name: "MJW'S SHAKE & SPICY",
+            description: "Order Payment",
+            order_id: data.rzpOrder.id,
+            handler: async function (response) {
+                setPlaceOrderLoading('Confirming Payment...');
+                await placeOrder({
+                    paymentMethod: 'online',
+                    paymentResponse: response
+                });
+            },
+            modal: {
+                ondismiss: function () {
+                    isCheckoutProcessing = false;
+                    resetPlaceOrderButton();
+                    showCheckoutPopup('Payment Cancelled', 'Your order was not placed.', 'error');
+                }
+            },
+            prefill: {
+                name: data.user?.name || '',
+                email: data.user?.email || ''
+            },
+            theme: { color: "#733CC3" }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+            console.error("[PAYMENT] Failed:", response.error);
+            isCheckoutProcessing = false;
+            resetPlaceOrderButton();
+            showCheckoutPopup('Payment Failed', response.error.description || 'Please try again.', 'error');
+        });
+
+        rzp.open();
+    } catch (e) {
+        console.error(e);
+        isCheckoutProcessing = false;
+        resetPlaceOrderButton();
+        showCheckoutPopup('Unable to Start Payment', e.message || 'Please try again.', 'error');
+    }
+}
+
+async function placeOrder({ paymentMethod, paymentResponse = null }) {
+    try {
+        const endpoint = paymentMethod === 'online'
+            ? '/api/checkout/verify-payment'
+            : '/api/checkout';
+        const payload = paymentMethod === 'online'
+            ? paymentResponse
+            : { paymentMethod: 'cod' };
+
+        const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+            throw new Error(data.error || 'Checkout Error');
+        }
+
+        console.log("[CHECKOUT] Order stored successfully:", data);
+        showCheckoutPopup('Order Placed Successfully!', `Your Order ID: ${data.orderId}`, 'success');
+        setTimeout(() => {
+            window.location.href = '/menu';
+        }, 1400);
+    } catch(e) {
+        console.error(e);
+        isCheckoutProcessing = false;
+        resetPlaceOrderButton();
+
+        if (paymentMethod === 'online') {
+            showCheckoutPopup('Payment Failed', e.message || 'Please try again.', 'error');
+        } else {
+            showCheckoutPopup('Order Could Not Be Placed', e.message || 'Please try again.', 'error');
+        }
+    }
+}
+</script>
+<%- include('sidebar') %>
+</body></html>

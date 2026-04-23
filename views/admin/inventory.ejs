@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Inventory Management | MJW'S SHAKE & SPICY</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#733CC3",
+                        "primary-dim": "#5A28A0",
+                        "secondary": "#9D79D3",
+                        "on-surface": "#3B1E54",
+                        "on-surface-variant": "#6B6B6B",
+                        "surface": "#F8F7FB",
+                        "surface-container": "#F0E8FF",
+                        "surface-container-low": "#F8F7FB",
+                        "surface-container-highest": "#B497E0",
+                        "surface-container-lowest": "#FFFFFF",
+                        "tertiary": "#C48F00",
+                        "outline": "#9D79D3",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #733CC344; border-radius: 10px; }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+    <%- include('dashboard_sidebar') %>
+
+    <div class="lg:ml-72 min-h-screen">
+        <header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-xl px-8 py-6 flex justify-between items-center border-b border-primary/5">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden p-2 text-primary" onclick="toggleSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="text-2xl font-headline font-black text-primary">Inventory</h1>
+            </div>
+            <button onclick="openAddModal()" class="bg-primary text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-primary/20 flex items-center gap-2 hover:scale-105 transition-transform active:scale-95">
+                <span class="material-symbols-outlined text-sm">add</span> New Item
+            </button>
+        </header>
+
+        <main class="p-8 lg:p-12 space-y-12">
+            <!-- Stats Bento Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-surface-container p-8 rounded-[2rem] flex flex-col justify-between min-h-[180px] relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <p class="text-[10px] uppercase font-bold tracking-widest text-primary mb-2">Inventory Value</p>
+                        <h2 class="text-4xl font-black text-on-surface">₹<%= totalValue.toLocaleString('en-IN') %></h2>
+                        <p class="text-secondary text-sm font-medium mt-2">Total worth of menu items</p>
+                    </div>
+                    <div class="absolute -right-6 -bottom-6 opacity-5 group-hover:scale-110 transition-transform duration-700">
+                        <span class="material-symbols-outlined text-[120px]">restaurant_menu</span>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-primary/5">
+                    <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-secondary">category</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-on-surface"><%= [...new Set(products.map(p => p.category))].length %></h3>
+                    <p class="text-secondary text-sm font-medium">Unique Categories</p>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-primary/5">
+                    <div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-tertiary">inventory</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-on-surface">Stable</h3>
+                    <p class="text-secondary text-sm font-medium">Inventory Health</p>
+                </div>
+            </section>
+
+            <!-- Inventory Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <% products.forEach(product => { %>
+                <div class="group bg-white rounded-[2.5rem] p-4 shadow-sm border border-primary/5 transition-all duration-300 hover:-translate-y-2 hover:border-primary/20">
+                    <div class="relative h-48 rounded-[2rem] overflow-hidden mb-4">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 backdrop-blur-md text-primary text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-wider shadow-sm"><%= product.category %></span>
+                        </div>
+                    </div>
+                    <div class="px-2">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-on-surface text-sm line-clamp-1"><%= product.name %></h4>
+                            <span class="text-primary font-black text-sm">₹<%= product.price %></span>
+                        </div>
+                        <p class="text-[10px] text-secondary font-medium mb-4">ID: <%= product._id.toString().substring(18).toUpperCase() %></p>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-primary/5">
+                            <div class="flex gap-2">
+                                <button onclick="editProduct('<%= JSON.stringify(product) %>')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary hover:text-white transition-all text-primary" title="Edit">
+                                    <span class="material-symbols-outlined text-sm">edit</span>
+                                </button>
+                                <button onclick="toggleAvailability('<%= product._id %>', <%= product.isAvailable %>)" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary hover:text-white transition-all <%= product.isAvailable ? 'text-primary' : 'text-stone-400' %>" title="<%= product.isAvailable ? 'Mark Unavailable' : 'Mark Available' %>">
+                                    <span class="material-symbols-outlined text-sm"><%= product.isAvailable ? 'visibility' : 'visibility_off' %></span>
+                                </button>
+                                <button onclick="deleteProduct('<%= product._id %>')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center hover:bg-red-500 hover:text-white transition-all text-red-500" title="Delete">
+                                    <span class="material-symbols-outlined text-sm">delete</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <div class="w-1.5 h-1.5 rounded-full <%= product.isAvailable ? 'bg-green-500' : 'bg-stone-400' %>"></div>
+                                <span class="text-[9px] font-black uppercase text-secondary tracking-widest"><%= product.isAvailable ? 'Active' : 'Inactive' %></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="productModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-on-surface/40 backdrop-blur-sm transition-all duration-300 opacity-0">
+        <div class="bg-white w-full max-w-2xl rounded-[3rem] overflow-hidden shadow-2xl transform scale-95 transition-all duration-300">
+            <div class="px-10 py-8 border-b border-primary/5 flex justify-between items-center bg-surface-container/30">
+                <h2 id="modalTitle" class="text-2xl font-headline font-black text-primary">Add New Menu Item</h2>
+                <button onclick="closeModal()" class="w-10 h-10 flex items-center justify-center hover:bg-primary/10 rounded-full text-primary transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="productForm" class="p-10 grid grid-cols-2 gap-6" onsubmit="handleProductSubmit(event)">
+                <input type="hidden" id="productId">
+                <div class="col-span-2 sm:col-span-1 space-y-2">
+                    <label class="text-[10px] uppercase font-bold tracking-widest text-secondary ml-4">Item Name</label>
+                    <input id="p-name" required class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none" placeholder="e.g. Wagyu Beef Slider" type="text"/>
+                </div>
+                <div class="col-span-2 sm:col-span-1 space-y-2">
+                    <label class="text-[10px] uppercase font-bold tracking-widest text-secondary ml-4">Price (₹)</label>
+                    <input id="p-price" required class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none" placeholder="0.00" type="number"/>
+                </div>
+                <div class="col-span-2 sm:col-span-1 space-y-2">
+                    <label class="text-[10px] uppercase font-bold tracking-widest text-secondary ml-4">Category</label>
+                    <select id="p-category" required class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none appearance-none">
+                        <option value="Shakes">Shakes</option>
+                        <option value="Snacks">Snacks</option>
+                        <option value="Sandwiches">Sandwiches</option>
+                        <option value="Burgers">Burgers</option>
+                        <option value="Pizza">Pizza</option>
+                    </select>
+                </div>
+                <div class="col-span-2 sm:col-span-1 space-y-2">
+                    <label class="text-[10px] uppercase font-bold tracking-widest text-secondary ml-4">Image URL</label>
+                    <input id="p-image" class="w-full bg-surface-container-low border-none rounded-full px-6 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none" placeholder="https://..." type="url"/>
+                </div>
+                <div class="col-span-2 space-y-2">
+                    <label class="text-[10px] uppercase font-bold tracking-widest text-secondary ml-4">Item Description</label>
+                    <textarea id="p-desc" class="w-full bg-surface-container-low border-none rounded-[2rem] px-6 py-4 text-sm focus:ring-2 focus:ring-primary/20 outline-none" placeholder="Briefly describe the ingredients and flavor profile..." rows="3"></textarea>
+                </div>
+                <div class="col-span-2 flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="closeModal()" class="px-8 py-3 rounded-full font-bold text-secondary hover:bg-surface-container transition-colors">Cancel</button>
+                    <button type="submit" class="bg-primary text-white px-10 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform active:scale-95">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = 'Add New Menu Item';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            showModal();
+        }
+
+        function editProduct(productStr) {
+            const product = JSON.parse(productStr);
+            document.getElementById('modalTitle').textContent = 'Edit Menu Item';
+            document.getElementById('productId').value = product._id;
+            document.getElementById('p-name').value = product.name;
+            document.getElementById('p-price').value = product.price;
+            document.getElementById('p-category').value = product.category;
+            document.getElementById('p-image').value = product.imageUrl || '';
+            document.getElementById('p-desc').value = product.description || '';
+            showModal();
+        }
+
+        function showModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        async function handleProductSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('productId').value;
+            const data = {
+                productId: id,
+                name: document.getElementById('p-name').value,
+                price: document.getElementById('p-price').value,
+                category: document.getElementById('p-category').value,
+                imageUrl: document.getElementById('p-image').value,
+                description: document.getElementById('p-desc').value
+            };
+
+            const url = id ? '/admin/inventory/update' : '/admin/inventory/add';
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    alert('Error saving product');
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        async function deleteProduct(productId) {
+            if (!confirm('Are you sure you want to delete this item?')) return;
+            try {
+                const res = await fetch('/admin/inventory/delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+                if (res.ok) location.reload();
+            } catch (err) { console.error(err); }
+        }
+
+        async function toggleAvailability(productId, currentStatus) {
+            try {
+                const res = await fetch('/admin/inventory/toggle-availability', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId, isAvailable: !currentStatus })
+                });
+                if (res.ok) location.reload();
+            } catch (err) { console.error(err); }
+        }
+    </script>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+</body>
+</html>

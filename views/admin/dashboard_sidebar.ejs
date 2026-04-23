@@ -1,0 +1,87 @@
+<!-- SIDE NAVIGATION DRAWER -->
+<aside class="sidebar-transition fixed left-0 top-0 h-full z-50 flex flex-col py-8 bg-[#F8F7FB] dark:bg-stone-950 h-screen w-72 rounded-r-[3rem] shadow-[20px_0_40px_rgba(62,42,94,0.06)] -translate-x-full lg:translate-x-0" id="sidebar">
+<div class="px-8 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+</div>
+<div>
+<h2 class="text-lg font-black text-[#733CC3] leading-none">MJW'S</h2>
+<p class="text-[10px] font-bold tracking-[0.2em] text-secondary">SHAKE &amp; SPICY</p>
+</div>
+</div>
+<div class="px-6 mb-8">
+<div class="flex items-center gap-4 p-4 bg-surface-container rounded-lg">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl">
+    <%= user ? user.name.charAt(0).toUpperCase() : 'A' %>
+</div>
+<div class="flex flex-col">
+<span class="font-headline font-bold text-sm text-on-surface"><%= user ? user.name : 'Admin' %></span>
+<span class="text-xs text-on-surface-variant">System Administrator</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col px-4 gap-1">
+<!-- Dashboard -->
+<a id="nav-dashboard" class="text-stone-600 dark:text-stone-400 mx-2 my-1 px-4 py-3 flex items-center gap-3 hover:bg-[#F0E8FF] dark:hover:bg-stone-900 rounded-full transition-transform duration-300 hover:translate-x-1" href="/admin">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Dashboard</span>
+</a>
+<!-- Inventory -->
+<a id="nav-inventory" class="text-stone-600 dark:text-stone-400 mx-2 my-1 px-4 py-3 flex items-center gap-3 hover:bg-[#F0E8FF] dark:hover:bg-stone-900 rounded-full transition-transform duration-300 hover:translate-x-1" href="/admin/inventory">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Inventory</span>
+</a>
+<!-- Orders -->
+<a id="nav-orders" class="text-stone-600 dark:text-stone-400 mx-2 my-1 px-4 py-3 flex items-center gap-3 hover:bg-[#F0E8FF] dark:hover:bg-stone-900 rounded-full transition-transform duration-300 hover:translate-x-1" href="/admin/orders">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Orders</span>
+</a>
+<!-- Analytics -->
+<a id="nav-analytics" class="text-stone-600 dark:text-stone-400 mx-2 my-1 px-4 py-3 flex items-center gap-3 hover:bg-[#F0E8FF] dark:hover:bg-stone-900 rounded-full transition-transform duration-300 hover:translate-x-1" href="/admin/analytics">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Analytics</span>
+</a>
+<!-- Users -->
+<a id="nav-users" class="text-stone-600 dark:text-stone-400 mx-2 my-1 px-4 py-3 flex items-center gap-3 hover:bg-[#F0E8FF] dark:hover:bg-stone-900 rounded-full transition-transform duration-300 hover:translate-x-1" href="/admin/users">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Users</span>
+</a>
+</nav>
+<div class="mt-auto px-6">
+<button class="w-full text-stone-600 dark:text-stone-400 mx-2 my-1 px-4 py-3 flex items-center gap-3 hover:bg-error-container/10 hover:text-error rounded-full transition-transform duration-300" onclick="handleLogout()">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Logout</span>
+</button>
+</div>
+</aside>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+
+        if (isOpen) {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        } else {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+    }
+
+    function handleLogout() {
+        if (confirm('Log out from Admin Panel?')) {
+            fetch('/api/auth/logout', { method: 'POST' })
+                .then(() => window.location.href = '/login');
+        }
+    }
+
+    // Set active link based on current path
+    const path = window.location.pathname;
+    if (path === '/admin') document.getElementById('nav-dashboard').classList.add('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white');
+    else if (path === '/admin/inventory') document.getElementById('nav-inventory').classList.add('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white');
+    else if (path === '/admin/orders') document.getElementById('nav-orders').classList.add('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white');
+    else if (path === '/admin/analytics') document.getElementById('nav-analytics').classList.add('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white');
+    else if (path === '/admin/users') document.getElementById('nav-users').classList.add('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white');
+</script>

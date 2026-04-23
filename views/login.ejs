@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | MJW'S SHAKE &amp; SPICY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#F8F7FB",
+                    "secondary-fixed-dim": "#F0E8FF",
+                    "surface-container-lowest": "#FFFFFF",
+                    "on-background": "#3B1E54",
+                    "tertiary": "#C48F00",
+                    "primary-fixed-dim": "#B497E0",
+                    "on-primary-container": "#FFFFFF",
+                    "on-error-container": "#3B1E54",
+                    "error": "#FF6B3D",
+                    "on-secondary-fixed-variant": "#3B1E54",
+                    "inverse-primary": "#733CC3",
+                    "on-secondary-container": "#3B1E54",
+                    "error-container": "#FF6B3D",
+                    "secondary-fixed": "#9D79D3",
+                    "secondary-dim": "#F0E8FF",
+                    "inverse-on-surface": "#6B6B6B",
+                    "surface-dim": "#B497E0",
+                    "on-primary-fixed-variant": "#B497E0",
+                    "on-primary-fixed": "#FFFFFF",
+                    "on-surface-variant": "#6B6B6B",
+                    "tertiary-fixed": "#C48F00",
+                    "surface-container-highest": "#B497E0",
+                    "primary-fixed": "#B497E0",
+                    "tertiary-container": "#C48F00",
+                    "on-tertiary-container": "#3B1E54",
+                    "inverse-surface": "#3B1E54",
+                    "on-surface": "#3B1E54",
+                    "surface-bright": "#F8F7FB",
+                    "background": "#F8F7FB",
+                    "surface": "#F8F7FB",
+                    "surface-variant": "#B497E0",
+                    "tertiary-fixed-dim": "#F4C542",
+                    "on-primary": "#FFFFFF",
+                    "tertiary-dim": "#F4C542",
+                    "secondary-container": "#F0E8FF",
+                    "on-secondary": "#3B1E54",
+                    "on-error": "#FFFFFF",
+                    "outline": "#9D79D3",
+                    "on-tertiary-fixed-variant": "#3B1E54",
+                    "on-secondary-fixed": "#3B1E54",
+                    "primary-dim": "#5A28A0",
+                    "surface-container": "#F0E8FF",
+                    "primary": "#733CC3",
+                    "on-tertiary-fixed": "#3B1E54",
+                    "on-tertiary": "#3B1E54",
+                    "outline-variant": "#733CC3",
+                    "surface-container-high": "#F0E8FF",
+                    "primary-container": "#B497E0",
+                    "surface-tint": "#733CC3",
+                    "secondary": "#9D79D3",
+                    "error-dim": "#FF6B3D"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-transition {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .hidden-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .active-step {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .pill-gradient {
+            background: linear-gradient(135deg, #733CC3 0%, #B497E0 100%);
+        }
+        .soft-shadow {
+            shadow-soft: 0 20px 50px rgba(59, 30, 84, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-[#F8F7FB]/80 dark:bg-stone-950/80 backdrop-blur-2xl fixed top-0 w-full z-50 flex items-center justify-between px-8 py-6 shadow-[0_10px_30px_rgba(59,30,84,0.04)]">
+<div class="flex items-center gap-4">
+<span onclick="document.getElementById('mobile-sidebar').classList.remove('hidden')" class="material-symbols-outlined text-[#733CC3] dark:text-[#B497E0] hover:opacity-80 transition-opacity cursor-pointer">menu</span>
+<h1 onclick="window.location.href='/'" class="cursor-pointer text-2xl font-bold tracking-tighter text-[#733CC3] dark:text-[#B497E0] font-['Plus_Jakarta_Sans'] tracking-tight">MJW'S SHAKE &amp; SPICY</h1>
+</div>
+<div class="hidden md:flex gap-6">
+<a class="text-stone-600 dark:text-stone-400 font-bold hover:opacity-80 transition-opacity" href="/menu">Menu</a>
+<a class="text-stone-600 dark:text-stone-400 font-bold hover:opacity-80 transition-opacity" href="/">Home</a>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-6">
+<!-- Visual "Garnish" Elements -->
+<div class="fixed top-20 right-[10%] w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl -z-10"></div>
+<div class="fixed bottom-20 left-[5%] w-80 h-80 bg-primary-container/10 rounded-full blur-3xl -z-10"></div>
+<div class="w-full max-w-md bg-white rounded-[2.5rem] p-10 md:p-14 shadow-[0_30px_60px_rgba(59,30,84,0.1)] relative overflow-hidden group border border-primary/5" id="loginCard">
+<!-- Asymmetrical Accent -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary-container/10 rounded-full group-hover:scale-110 transition-transform duration-700"></div>
+<!-- Step 1: Email Input -->
+<section class="active-step step-transition" id="stepEmail">
+<div class="mb-8 text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">alternate_email</span>
+</div>
+<h2 class="text-3xl font-headline font-extrabold text-on-surface tracking-tight mb-2">Welcome Back!</h2>
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-widest">Enter Email Address</p>
+</div>
+<div class="space-y-6">
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-primary/40 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">mail</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 bg-[#F8F7FB] rounded-2xl border border-primary/5 focus:ring-4 focus:ring-primary/10 text-on-surface font-medium placeholder:text-outline-variant/60 transition-all duration-300 outline-none" id="emailInput" placeholder="your@email.com" type="email"/>
+<p class="mt-2 text-xs text-error font-medium hidden" id="emailError">Please enter a valid email address</p>
+</div>
+<button class="w-full bg-gradient-to-br from-primary to-primary-dim py-4 rounded-full text-on-primary font-bold text-lg hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(115,60,195,0.3)] transition-all duration-500 shadow-[0_10px_20px_rgba(115,60,195,0.2)] active:scale-95" onclick="sendOTP()">
+                        Send OTP
+                    </button>
+<p class="text-center text-xs text-on-surface-variant px-4">
+                        By continuing, you agree to our <a class="text-secondary font-bold hover:underline" href="#">Terms of Service</a> and <a class="text-secondary font-bold hover:underline" href="#">Privacy Policy</a>.
+                    </p>
+</div>
+</section>
+<!-- Step 2: OTP Input -->
+<section class="hidden-step step-transition" id="stepOTP">
+<button class="mb-6 flex items-center text-secondary hover:opacity-70 transition-opacity" onclick="goToStep('stepEmail')">
+<span class="material-symbols-outlined mr-1">arrow_back</span>
+<span class="text-sm font-bold font-label uppercase tracking-wider">Change Email</span>
+</button>
+<div class="mb-8">
+<h2 class="text-display-sm text-primary font-headline font-extrabold tracking-tight mb-2">Verify Email</h2>
+<p class="text-on-surface-variant font-label text-sm">Sent to <span class="font-bold text-on-surface" id="displayEmail">your@email.com</span></p>
+</div>
+<div class="space-y-8">
+<div class="flex justify-between gap-3" id="otpInputs">
+<input class="otp-box w-14 h-16 text-center text-2xl font-bold bg-surface-container-low rounded-lg border-none focus:ring-2 focus:ring-primary/40 text-primary" maxlength="1" type="text"/>
+<input class="otp-box w-14 h-16 text-center text-2xl font-bold bg-surface-container-low rounded-lg border-none focus:ring-2 focus:ring-primary/40 text-primary" maxlength="1" type="text"/>
+<input class="otp-box w-14 h-16 text-center text-2xl font-bold bg-surface-container-low rounded-lg border-none focus:ring-2 focus:ring-primary/40 text-primary" maxlength="1" type="text"/>
+<input class="otp-box w-14 h-16 text-center text-2xl font-bold bg-surface-container-low rounded-lg border-none focus:ring-2 focus:ring-primary/40 text-primary" maxlength="1" type="text"/>
+</div>
+<p class="text-center text-sm text-error font-medium hidden" id="otpError">Incorrect OTP. Please try again.</p>
+<div class="space-y-4">
+<button class="w-full pill-gradient py-4 rounded-full text-on-primary font-bold text-lg hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="verifyOTP()">
+                            Verify OTP
+                        </button>
+<div class="text-center">
+<p class="text-sm text-on-surface-variant">Didn't receive code? 
+                                <button class="text-[#733CC3] font-bold underline underline-offset-4 hover:opacity-70 transition-opacity" onclick="sendOTP()">Resend OTP</button>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 3: Name Input (New User) -->
+<section class="hidden-step step-transition" id="stepName">
+<div class="mb-8">
+<h2 class="text-display-sm text-primary font-headline font-extrabold tracking-tight mb-2">Tell us your name</h2>
+<p class="text-on-surface-variant font-label text-sm uppercase tracking-widest">Welcome to the family!</p>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider ml-1" for="nameInput">Full Name</label>
+<input class="w-full px-4 py-4 bg-surface-container-low rounded-lg border-none focus:ring-2 focus:ring-primary/40 text-on-surface font-medium placeholder:text-outline-variant/60" id="nameInput" placeholder="Enter your name" type="text"/>
+<p class="mt-2 text-xs text-error font-medium hidden" id="nameError">Please enter your name</p>
+</div>
+<button class="w-full pill-gradient py-4 rounded-full text-on-primary font-bold text-lg hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="completeRegistration()">
+                        Continue
+                    </button>
+</div>
+</section>
+<!-- Success Splash -->
+<section class="hidden-step step-transition text-center py-8" id="stepSuccess">
+<div class="w-24 h-24 bg-tertiary-container/20 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-tertiary text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="text-3xl font-headline font-black text-primary tracking-tight mb-2">You're In!</h2>
+<p class="text-on-surface-variant mb-8">Redirecting you to our spicy menu...</p>
+<div class="w-12 h-1 bg-surface-container-high rounded-full mx-auto overflow-hidden">
+<div class="w-full h-full bg-primary animate-[shimmer_1.5s_infinite]"></div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#F0E8FF] dark:bg-stone-900 w-full py-12 px-8 rounded-t-[2rem]">
+<div class="flex flex-col md:flex-row justify-between items-center gap-12 max-w-7xl mx-auto w-full">
+    <div class="text-center md:text-left">
+        <span class="text-xl font-black text-[#3B1E54] dark:text-white">MJW'S SHAKE &amp; SPICY</span>
+        <p class="text-xs text-[#3B1E54]/60 dark:text-white/60 mt-1 uppercase tracking-widest font-bold">Flavor Worth the Wait</p>
+    </div>
+    
+    <div class="flex flex-col items-center gap-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#733CC3]">Opening Hours</span>
+        <div class="flex gap-6 text-sm font-medium text-[#3B1E54] dark:text-white/80">
+            <p>Mon - Sat: <span class="text-primary font-bold">10:00 AM - 11:00 PM</span></p>
+            <p>Sunday: <span class="text-primary font-bold">10:00 AM - 09:00 PM</span></p>
+        </div>
+    </div>
+
+    <p class="text-[10px] uppercase tracking-[0.2em] text-[#3B1E54]/40 dark:text-white/40 font-bold">© 2024 ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+    <script>
+        let currentUserEmail = "";
+
+        // UI Helpers
+        function goToStep(stepId) {
+            const steps = ['stepEmail', 'stepOTP', 'stepName', 'stepSuccess'];
+            steps.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.remove('active-step');
+                    el.classList.add('hidden-step');
+                }
+            });
+
+            const activeEl = document.getElementById(stepId);
+            if (activeEl) {
+                activeEl.classList.remove('hidden-step');
+                setTimeout(() => activeEl.classList.add('active-step'), 10);
+            }
+        }
+
+        // OTP Input Auto-focus Logic
+        const otpBoxes = document.querySelectorAll('.otp-box');
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('keyup', (e) => {
+                if (e.key >= 0 && e.key <= 9) {
+                    if (index < otpBoxes.length - 1) otpBoxes[index + 1].focus();
+                } else if (e.key === 'Backspace') {
+                    if (index > 0) otpBoxes[index - 1].focus();
+                }
+            });
+        });
+
+        // 1. Email Input Screen
+        async function sendOTP() {
+            const email = document.getElementById('emailInput').value;
+            const errorEl = document.getElementById('emailError');
+
+            if (!email || !email.includes('@')) {
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            errorEl.classList.add('hidden');
+
+            currentUserEmail = email;
+
+            try {
+                const res = await fetch('/api/auth/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('displayEmail').innerText = email;
+                    otpBoxes.forEach(box => box.value = '');
+                    goToStep('stepOTP');
+                } else {
+                    alert(data.error || 'Error sending OTP');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Server error');
+            }
+        }
+
+        // 2. OTP Input Screen
+        async function verifyOTP() {
+            const enteredOTP = Array.from(otpBoxes).map(box => box.value).join('');
+            const errorEl = document.getElementById('otpError');
+
+            try {
+                const res = await fetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentUserEmail, otp: enteredOTP })
+                });
+                const data = await res.json();
+                
+                if (data.requireName) {
+                    goToStep('stepName');
+                } else if (data.success) {
+                    loginUser();
+                } else {
+                    errorEl.classList.remove('hidden');
+                    otpBoxes.forEach(box => box.classList.add('ring-2', 'ring-error/50'));
+                }
+            } catch (err) {
+                console.error(err);
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // 3. Name Input Screen
+        async function completeRegistration() {
+            const name = document.getElementById('nameInput').value.trim();
+            const errorEl = document.getElementById('nameError');
+
+            if (!name) {
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            errorEl.classList.add('hidden');
+
+            const enteredOTP = Array.from(otpBoxes).map(box => box.value).join('');
+            
+            try {
+                const res = await fetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentUserEmail, otp: enteredOTP, name })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loginUser();
+                } else {
+                    alert(data.error || 'Registration failed');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        function loginUser() {
+            goToStep('stepSuccess');
+            setTimeout(() => {
+                window.location.href = '<%= locals.returnTo || "/menu" %>';
+            }, 2500);
+        }
+    </script>
+<%- include('sidebar') %>
+</body>
+</html>

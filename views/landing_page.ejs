@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MJW'S SHAKE &amp; SPICY | Creamy Shakes &amp; Zesty Bites</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Be+Vietnam+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#FFFFFF",
+                    "outline": "#9D79D3",
+                    "on-surface": "#3B1E54",
+                    "secondary-dim": "#B497E0",
+                    "surface-container-high": "#F0E8FF",
+                    "surface": "#F8F7FB",
+                    "tertiary-fixed-dim": "#F4C542",
+                    "surface-bright": "#F8F7FB",
+                    "secondary": "#9D79D3",
+                    "primary-fixed": "#B497E0",
+                    "on-surface-variant": "#6B6B6B",
+                    "tertiary-dim": "#F4C542",
+                    "on-primary-container": "#FFFFFF",
+                    "tertiary": "#C48F00",
+                    "error-dim": "#FF6B3D",
+                    "on-error": "#FFFFFF",
+                    "secondary-fixed-dim": "#F0E8FF",
+                    "on-tertiary-fixed": "#3B1E54",
+                    "surface-container-highest": "#B497E0",
+                    "primary-container": "#B497E0",
+                    "on-secondary-fixed-variant": "#3B1E54",
+                    "on-primary-fixed-variant": "#B497E0",
+                    "inverse-primary": "#733CC3",
+                    "secondary-container": "#F0E8FF",
+                    "error-container": "#FF6B3D",
+                    "primary-fixed-dim": "#B497E0",
+                    "primary": "#733CC3",
+                    "surface-container": "#F0E8FF",
+                    "on-tertiary-fixed-variant": "#3B1E54",
+                    "on-secondary-fixed": "#3B1E54",
+                    "on-secondary": "#3B1E54",
+                    "tertiary-fixed": "#C48F00",
+                    "surface-container-lowest": "#FFFFFF",
+                    "secondary-fixed": "#9D79D3",
+                    "primary-dim": "#5A28A0",
+                    "surface-variant": "#B497E0",
+                    "on-secondary-container": "#3B1E54",
+                    "error": "#FF6B3D",
+                    "on-background": "#3B1E54",
+                    "inverse-surface": "#3B1E54",
+                    "background": "#F8F7FB",
+                    "on-tertiary-container": "#3B1E54",
+                    "on-tertiary": "#3B1E54",
+                    "surface-dim": "#B497E0",
+                    "on-error-container": "#3B1E54",
+                    "surface-tint": "#733CC3",
+                    "inverse-on-surface": "#6B6B6B",
+                    "outline-variant": "#733CC3",
+                    "tertiary-container": "#C48F00",
+                    "on-primary": "#FFFFFF",
+                    "surface-container-low": "#F8F7FB"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Be Vietnam Pro"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<script src="/js/toast.js"></script>
+<script>
+async function addToCart(productId, options = '', addons = {}) {
+    try {
+        const res = await fetch('/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId, options, addons })
+        });
+        const data = await res.json();
+        if (data.success) {
+            if (window.showToast) {
+                window.showToast('Item added to cart!', 'success');
+            } else {
+                alert('Item added to cart!');
+            }
+            // Update cart count badge
+            const badges = document.querySelectorAll('.cart-count-badge');
+            badges.forEach(b => {
+                b.innerText = parseInt(b.innerText || '0') + 1;
+            });
+        } else {
+            alert(data.error || 'Login required to add to cart');
+            if (data.error === 'Unauthorized') window.location.href = '/login';
+        }
+    } catch (e) { console.error(e); }
+}
+</script>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 w-full bg-[#F8F7FB]/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(59,30,84,0.04)] transition-all duration-500">
+<nav class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button onclick="document.getElementById('mobile-sidebar').classList.remove('hidden')" class="text-primary p-2 hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex items-center gap-2" onclick="window.location.href='/'" class="cursor-pointer">
+<span class="material-symbols-outlined text-[#733CC3]" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-headline text-2xl font-black text-[#733CC3] italic tracking-tight">MJW'S SHAKE &amp; SPICY</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#733CC3] border-b-4 border-[#733CC3] pb-1 font-headline font-bold" href="/">Home</a>
+<a class="text-[#3B1E54] font-medium font-headline hover:scale-105 transition-transform duration-300 hover:text-[#733CC3]" href="/menu">Menu</a>
+<a class="text-[#3B1E54] font-medium font-headline hover:scale-105 transition-transform duration-300 hover:text-[#733CC3]" href="#about">About</a>
+<% if (locals.user) { %>
+<a href="/user" class="flex items-center gap-2 bg-primary-container/20 dark:bg-stone-800 px-3 py-1.5 rounded-full hover:scale-105 transition-transform duration-300 active:scale-95 cursor-pointer">
+    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold"><%= locals.user.name ? locals.user.name.charAt(0).toUpperCase() : 'U' %></div>
+    <span class="font-bold text-primary dark:text-primary-fixed truncate max-w-[100px]"><%= locals.user.name || 'Profile' %></span>
+</a>
+<% } else { %>
+<a class="px-6 py-2 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-bold hover:scale-105 transition-transform duration-300 active:scale-95 shadow-lg" href="/login">Login</a>
+<% } %>
+</div>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[795px] flex items-center overflow-hidden pt-12">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+<div class="space-y-8 animate-in slide-in-from-left duration-700">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-container/30 text-tertiary rounded-full font-bold tracking-wide uppercase text-xs">
+<span class="material-symbols-outlined text-sm fill-icon" data-icon="local_fire_department">local_fire_department</span>
+                        Now Serving Pure Fusion
+                    </div>
+<h1 class="font-headline text-6xl md:text-7xl lg:text-8xl font-extrabold text-on-surface leading-[1.05] tracking-tight">
+                        MJW's Shake &amp; <span class="text-primary italic">Spicy Zone</span>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-lg leading-relaxed">
+                        Creamy Shakes, Zesty Bites, Infinite Delights. Experience the ultimate collision of cooling indulgence and fiery spice.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button onclick="window.location.href='/menu'" class="px-10 py-4 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-full font-bold text-lg hover:scale-105 hover:shadow-[0_20px_40px_rgba(115,60,195,0.3)] transition-all duration-500 shadow-[0_10px_20px_rgba(115,60,195,0.2)] active:scale-95">
+                            Order Now
+                        </button>
+<button onclick="window.location.href='/menu'" class="px-10 py-4 bg-white/50 backdrop-blur-sm border border-primary/10 text-on-surface rounded-full font-bold text-lg hover:bg-white hover:scale-105 transition-all duration-500 active:scale-95">
+                            View Full Menu
+                        </button>
+</div>
+</div>
+<div class="relative lg:ml-12 group">
+<div class="absolute -inset-8 bg-primary/5 rounded-[3rem] blur-3xl group-hover:bg-primary/10 transition-colors duration-1000"></div>
+<div class="relative rounded-[3rem] overflow-hidden shadow-[0_30px_60px_rgba(59,30,84,0.1)] border-8 border-white transition-all duration-700 group-hover:scale-[1.02]">
+<img alt="Creamy Strawberry Shake and Grilled Burger" class="w-full aspect-[4/5] object-cover" data-alt="Gourmet spicy burger with melting cheese next to a tall, creamy strawberry milkshake topped with whipped cream and sprinkles, studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8yoDuA-6bPwCUWNKVd9y09gY18tuLjdet-FrNg3NF4cMWNXw-5Plw4DBpPxza0JquNk3yfXpFqoktXTKFKqdsvdyOPB_KksE53nniDBN83sAV7JtsZ4iEhqoSEjiG9inSEguRiZy28t3II5QHix1rVO4gsPUCaO6nH3lHjeaeWFZcv4ffkH78NTFR8XcKwhrum_N255NGY3Es0PT1_fAo2G0BH66gdQ7EHFrNJ2dJjowGIYR2bbnoJSJ81_TkAAx1J7TAHWfZarc"/>
+</div>
+</div>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#F0E8FF] to-transparent -z-0 rounded-l-[5rem] translate-x-1/3 blur-3xl opacity-50"></div>
+</section>
+<!-- Features Bento Section -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Quick Delivery -->
+<div class="p-10 bg-white shadow-[0_10px_30px_rgba(59,30,84,0.03)] rounded-[2rem] space-y-6 hover:shadow-[0_20px_40px_rgba(59,30,84,0.08)] transition-all duration-500 group">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="electric_moped">electric_moped</span>
+</div>
+<h3 class="font-headline text-xl font-bold">Quick Delivery</h3>
+<p class="text-on-surface-variant text-sm">Lightning fast service right to your doorstep, piping hot and ice cold.</p>
+</div>
+<!-- Pure Ingredients -->
+<div class="p-10 bg-white shadow-[0_10px_30px_rgba(59,30,84,0.03)] rounded-[2rem] space-y-6 hover:shadow-[0_20px_40px_rgba(59,30,84,0.08)] transition-all duration-500 group md:mt-12">
+<div class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="eco">eco</span>
+</div>
+<h3 class="font-headline text-xl font-bold">Pure Ingredients</h3>
+<p class="text-on-surface-variant text-sm">Only the freshest farm-to-table components for that authentic homemade taste.</p>
+</div>
+<!-- Flavor Fusion -->
+<div class="p-10 bg-white shadow-[0_10px_30px_rgba(59,30,84,0.03)] rounded-[2rem] space-y-6 hover:shadow-[0_20px_40px_rgba(59,30,84,0.08)] transition-all duration-500 group">
+<div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<h3 class="font-headline text-xl font-bold">Flavor Fusion</h3>
+<p class="text-on-surface-variant text-sm">Where the cooling creaminess of shakes meets the fiery kick of zesty spices.</p>
+</div>
+<!-- Pocket Friendly -->
+<div class="p-10 bg-white shadow-[0_10px_30px_rgba(59,30,84,0.03)] rounded-[2rem] space-y-6 hover:shadow-[0_20px_40px_rgba(59,30,84,0.08)] transition-all duration-500 group md:mt-12">
+<div class="w-12 h-12 bg-outline/10 rounded-full flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<h3 class="font-headline text-xl font-bold">Pocket Friendly</h3>
+<p class="text-on-surface-variant text-sm">High-end gourmet flavors at prices that keep your wallet just as happy.</p>
+</div>
+</div>
+</section>
+<!-- Menu Preview Section -->
+<section class="bg-surface-container-low py-32 rounded-t-xl" id="menu">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div>
+<h2 class="font-headline text-5xl font-black mb-4">Chef's <span class="text-primary">Best Picks</span></h2>
+<p class="text-on-surface-variant text-lg max-w-md">Our most loved combinations of cooling shakes and sizzling snacks.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-2 group" href="/menu">
+                        See Full Menu
+                        <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Kitkat Shake -->
+<div class="bg-white rounded-[2.5rem] overflow-hidden flex flex-col group hover:shadow-[0_30px_60px_rgba(59,30,84,0.1)] transition-all duration-700 border border-primary/5">
+<div class="relative overflow-hidden h-64">
+<img alt="Kitkat Shake" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Thick chocolate KitKat milkshake in a glass jar with whipped cream and crushed chocolate bars on top, soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEM1SFjBZzxC3uLCoeSDHfyHRJIHKvtW9lOoUV43Dz9M6rPZGRhQPKOVtFnsaoZtXJkhW_ZvanABx5q0avIPRD60fNh_ZqgTG1nmQptAeZJ21qk3r1S18AFHGSt_hlenub6nBrxr4--IQrGkHB3bUr6Y4rGDL5e6D_2JUEpByD4uJrqUcGudbzqRYCrtIXlNGrrxIwjgJ7hlYgI9GX914Bsua1pSwWXs5766_Hw_CJ2RsxQ1rpGezEHOQe_jK7QW9deLT4lwdiq2c"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary text-on-tertiary px-3 py-1 rounded-sm text-xs font-bold font-label">SWEET</span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Kitkat Shake</h3>
+<p class="text-on-surface-variant text-sm mb-4">Crushed KitKat pieces blended with premium vanilla ice cream.</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<span class="text-primary font-bold text-lg">₹80 / 110</span>
+<button onclick="addToCart('69e0ab557e907af7ebb1e0dd')" class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-xl" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Shahi Paneer Burger -->
+<div class="bg-white rounded-[2.5rem] overflow-hidden flex flex-col group hover:shadow-[0_30px_60px_rgba(59,30,84,0.1)] transition-all duration-700 border border-primary/5">
+<div class="relative overflow-hidden h-64">
+<img alt="Shahi Paneer Cheese Burger" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Gourmet paneer cheese burger with spicy orange sauce, crispy lettuce, and melting cheese, dark rustic background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQhMYBWkcfXLryabBSelN48ff8ceqXVhm7Zl90Zx5FlARz7vemSjgz7sZDFY0Ekc3CDBs1UCPDya04yszEyt2EfS386HmdOA7bp4fpM7QgHQuNlPuG-Q6_Ept-bz5QFNwhGG9Bd1DLdqjxQmSs0B5RiGKm_eYHzP3qWn0tpaxU2WIEvNA1fzBTlyH94gk23dlkXgd13zCe1qNkRTVX-fmEaremClHq9LoykX_3zcHBR3oustZB66AR2GqD-FUMHruWtLpiQHBuqwg"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-sm text-xs font-bold font-label">SPICY</span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Shahi Paneer Burger</h3>
+<p class="text-on-surface-variant text-sm mb-4">Tender paneer marinated in rich makhani gravy with extra cheese.</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<span class="text-primary font-bold text-lg">₹90</span>
+<button onclick="addToCart('69e0ab557e907af7ebb1e0f4')" class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-xl" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Corn Cheese Pizza -->
+<div class="bg-surface rounded-xl overflow-hidden flex flex-col group hover:shadow-xl transition-shadow">
+<div class="relative overflow-hidden h-64">
+<img alt="Corn Cheese Pizza" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Thin crust pizza topped with golden sweet corn and bubbling melted mozzarella cheese, fresh herbs, close-up shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFaLMIi34_4dqGp_C1i1iBhaZvS-_Xd12EttdyO1jachsP2k_9sPJ0tQKe-H73-d67CTiO6gvUZ-lJWp0F50acFDLLUUzWX5YPT20P0CJMMdPPlmeeIpjOzb_akg7r8EUpKL2phAbmljWRrOyYJiTJuU60Xrdjwe7JX6BQWUrK3JFfrZqBGg0w7Vg10aPDDCLaw0rvLplt_eP1LWvhvbMml-bz1MD2Tm9vP26MP2By9K-OouX5RzNJnO6E0xdXKXcSa-AtUjQqRe0"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-sm text-xs font-bold font-label">ZESY</span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Corn Cheese Pizza</h3>
+<p class="text-on-surface-variant text-sm mb-4">Golden sweet corn kernels smothered in molten mozzarella.</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<span class="text-primary font-bold text-lg">₹150</span>
+<button onclick="addToCart('69e0ab557e907af7ebb1e0f6')" class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-xl" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Green Apple Shake -->
+<div class="bg-surface rounded-xl overflow-hidden flex flex-col group hover:shadow-xl transition-shadow">
+<div class="relative overflow-hidden h-64">
+<img alt="Green Apple Shake" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Vibrant green apple milkshake in a tall glass garnished with apple slices and mint, bright airy lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY1rsDkYCcisZKRQoC-Vfz5dAbPFd8k7ZIHrfMpPqVr9DKmbQvoI-VCLHQyyJ4qN1PDx290azpxz0pd-UCg9NmwMO1BEeWcfh7m1ccLnj-dX4rYWa9ny5Uk8ffvrFGxzjmMWhLj2_V7GrPAQl31c-0Z8yBPVwUkquwDZKXIaJ671jhr_KLEsAA35_wphBjf19RI8SUP2OrKWALtAYXnw_EPUdkfQb-OEvLy8TvUNvRpCwNHYjzfPbSdKRs-zGsq37A27SOcOlKf34"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary text-on-tertiary px-3 py-1 rounded-sm text-xs font-bold font-label">FRESH</span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-xl font-bold mb-2">Green Apple Shake</h3>
+<p class="text-on-surface-variant text-sm mb-4">Zesty and tart green apple essence whipped with cold milk.</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<span class="text-primary font-bold text-lg">₹50 / 70</span>
+<button onclick="addToCart('69e0ab557e907af7ebb1e0d0')" class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-xl" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-32 px-8 overflow-hidden bg-white/50" id="about">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+<div class="w-full lg:w-1/2 relative">
+    <div class="bg-primary aspect-square rounded-full absolute -top-12 -left-12 opacity-10 blur-3xl"></div>
+    <div class="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
+        <img alt="Our Heritage" class="w-full object-cover h-[600px] hover:scale-105 transition-transform duration-700" src="../asset/mister_juice_wale.jpeg"/>
+        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
+            <p class="font-headline font-black text-2xl tracking-tight">Est. 1980s • Sangaria, Rajasthan</p>
+        </div>
+    </div>
+</div>
+<div class="w-full lg:w-1/2 space-y-10">
+    <div class="space-y-4">
+        <span class="text-secondary font-headline font-black uppercase tracking-[0.4em] text-sm">Legacy in Every Sip</span>
+        <h2 class="font-headline text-5xl md:text-6xl font-black leading-[1.1] text-primary">From a Small Juice Shop to a <span class="italic text-secondary">Culinary Icon.</span></h2>
+    </div>
+    
+    <div class="space-y-6 text-lg text-on-surface-variant leading-relaxed font-medium">
+        <p>
+            Our story began in the late <span class="text-primary font-bold">1980s</span>, in the heart of the small town of <span class="text-secondary font-bold">Sangaria, Rajasthan</span>. It started as a humble local juice and shake shop <span class="text-primary font-black tracking-wide italic">Mister Juice Wale</span> a place where quality and passion were the only ingredients that mattered.
+        </p>
+        <p>
+            For decades, we served the community with a simple promise: the freshest flavors in town. As our dreams grew, so did our vision. In <span class="text-primary font-bold">2012</span>, we evolved into the full-scale restaurant you know today, bringing that same legacy of homemade care to a modern, spicy fusion menu.
+        </p>
+        <p>
+            While we bid a nostalgic farewell to our original shop in 2018, its spirit lives on in every shake we blend and every spicy bite we serve. We aren't just a restaurant; we are <span class="text-secondary font-bold">Sangaria's flavor history</span> in the making.
+        </p>
+    </div>
+
+    <div class="flex flex-wrap gap-10 pt-6">
+        <div class="group">
+            <div class="text-5xl font-headline font-black text-primary group-hover:scale-110 transition-transform duration-300">35+</div>
+            <div class="text-xs font-black uppercase tracking-[0.2em] text-secondary mt-2">Years of Heritage</div>
+        </div>
+        <div class="group">
+            <div class="text-5xl font-headline font-black text-primary group-hover:scale-110 transition-transform duration-300">2012</div>
+            <div class="text-xs font-black uppercase tracking-[0.2em] text-secondary mt-2">The New Era</div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="bg-surface-container py-32 rounded-b-[4rem]">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center max-w-2xl mx-auto mb-20">
+<h2 class="font-headline text-4xl font-extrabold mb-6">Real Flavor, <span class="text-tertiary">Real Fans</span></h2>
+<p class="text-on-surface-variant">Don't just take our word for it—join the thousands of spice-seekers and shake-lovers.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="p-8 bg-surface rounded-lg shadow-sm space-y-6 relative">
+<span class="material-symbols-outlined text-4xl text-primary-container absolute top-6 right-8 opacity-40" data-icon="format_quote">format_quote</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+</div>
+<p class="italic text-on-surface leading-relaxed">"The Shahi Paneer Burger is a revelation! It's so spicy and rich, followed perfectly by the Kitkat Shake. Life changed."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center font-bold text-on-secondary-container">AK</div>
+<div>
+<div class="font-bold">Arjun Kapoor</div>
+<div class="text-xs text-on-surface-variant">Verified Foodie</div>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="p-8 bg-surface rounded-lg shadow-sm space-y-6 relative md:mt-12">
+<span class="material-symbols-outlined text-4xl text-primary-container absolute top-6 right-8 opacity-40" data-icon="format_quote">format_quote</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+</div>
+<p class="italic text-on-surface leading-relaxed">"Pure ingredients and it shows. The Green Apple shake is the most refreshing thing I've had this summer."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center font-bold text-on-tertiary-container">PS</div>
+<div>
+<div class="font-bold">Priya Sharma</div>
+<div class="text-xs text-on-surface-variant">Repeat Customer</div>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="p-8 bg-surface rounded-lg shadow-sm space-y-6 relative">
+<span class="material-symbols-outlined text-4xl text-primary-container absolute top-6 right-8 opacity-40" data-icon="format_quote">format_quote</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+<span class="material-symbols-outlined text-secondary fill-icon" data-icon="star">star</span>
+</div>
+<p class="italic text-on-surface leading-relaxed">"Incredible value for money. The Corn Cheese Pizza was loaded! This is my new weekend ritual."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-outline-variant flex items-center justify-center font-bold text-on-surface">RV</div>
+<div>
+<div class="font-bold">Rahul Verma</div>
+<div class="text-xs text-on-surface-variant">Local Guide</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="bg-gradient-to-br from-primary to-primary-container rounded-xl p-12 md:p-24 text-center text-on-primary relative overflow-hidden group">
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+<div class="relative z-10 space-y-8">
+<h2 class="font-headline text-5xl md:text-7xl font-black">Satisfy Your <br/> Cravings Now!</h2>
+<p class="text-xl opacity-90 max-w-xl mx-auto">Don't wait for hunger to strike. Get your favorite fusion fix delivered in under 30 minutes.</p>
+<button onclick="window.location.href='/menu'" class="px-12 py-5 bg-surface text-primary rounded-full font-black text-xl hover:scale-110 hover:shadow-2xl transition-all active:scale-95">
+                        Order Now
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#F0E8FF] w-full rounded-t-[3rem] mt-20">
+<div class="px-12 py-16 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 font-['Be_Vietnam_Pro'] text-sm">
+    <div class="space-y-6">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#733CC3]" data-icon="restaurant_menu">restaurant_menu</span>
+            <span class="text-xl font-bold text-[#3B1E54]">MJW's Shake &amp; Spicy Zone</span>
+        </div>
+        <p class="text-[#3B1E54] leading-relaxed max-w-xs">The ultimate destination for flavor enthusiasts who refuse to compromise between sweet and spicy.</p>
+        <div class="flex gap-4">
+            <a class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary hover:scale-110 transition-transform" href="#"><span class="material-symbols-outlined" data-icon="share">share</span></a>
+            <a class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary hover:scale-110 transition-transform" href="#"><span class="material-symbols-outlined" data-icon="mail">mail</span></a>
+        </div>
+    </div>
+    
+    <div class="space-y-4">
+        <h4 class="font-headline font-bold text-secondary uppercase tracking-widest text-xs">Navigation</h4>
+        <ul class="space-y-2">
+            <li><a class="text-[#3B1E54] hover:text-[#733CC3] transition-colors" href="/menu">Menu</a></li>
+            <li><a class="text-[#3B1E54] hover:text-[#733CC3] transition-colors" href="/">Home</a></li>
+            <li><a class="text-[#3B1E54] hover:text-[#733CC3] transition-colors" href="/user">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="space-y-4">
+        <h4 class="font-headline font-bold text-secondary uppercase tracking-widest text-xs">Opening Hours</h4>
+        <ul class="space-y-2 text-[#3B1E54] font-medium">
+            <li class="flex justify-between gap-8"><span>Mon - Sat</span> <span class="text-primary font-bold">10:00 AM - 11:00 PM</span></li>
+            <li class="flex justify-between gap-8"><span>Sunday</span> <span class="text-primary font-bold">10:00 AM - 09:00 PM</span></li>
+        </ul>
+    </div>
+</div>
+<div class="border-t border-[#733CC3]/10 py-8 px-12 max-w-7xl mx-auto text-center">
+    <span class="text-[#3B1E54] font-medium text-xs opacity-60 uppercase tracking-widest">© 2024 MJW's Shake &amp; Spicy Zone. Crafted for flavor.</span>
+</div>
+</footer>
+<!-- FAB Cart -->
+<button onclick="window.location.href='/cart'" class="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-primary to-primary-dim text-white rounded-full flex items-center justify-center shadow-[0_20px_40px_rgba(59,30,84,0.2)] hover:scale-110 transition-transform active:scale-95 z-50">
+    <span class="material-symbols-outlined" data-icon="shopping_basket" style="font-variation-settings: 'FILL' 1;">shopping_basket</span>
+    <span class="absolute -top-1 -right-1 bg-[#C48F00] text-white text-[10px] font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white cart-count-badge"><%= cartCount %></span>
+</button>
+<%- include('sidebar') %>
+</body></html>

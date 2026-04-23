@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MJW'S SHAKE & SPICY - Order Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#733CC3",
+                        "primary-dim": "#5A28A0",
+                        "secondary": "#9D79D3",
+                        "on-surface": "#3B1E54",
+                        "on-surface-variant": "#6B6B6B",
+                        "surface": "#F8F7FB",
+                        "surface-container": "#F0E8FF",
+                        "surface-container-low": "#F8F7FB",
+                        "surface-container-highest": "#B497E0",
+                        "surface-container-lowest": "#FFFFFF",
+                        "tertiary": "#C48F00",
+                        "outline": "#9D79D3",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #733CC344; border-radius: 10px; }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+    <%- include('dashboard_sidebar') %>
+
+    <div class="lg:ml-72 min-h-screen">
+        <header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-xl px-8 py-6 flex justify-between items-center border-b border-primary/5">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden p-2 text-primary" onclick="toggleSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="text-2xl font-headline font-black text-primary">Order Management</h1>
+            </div>
+        </header>
+
+        <main class="p-8">
+            <div class="grid grid-cols-1 gap-6">
+                <% if (orders && orders.length > 0) { %>
+                    <% orders.forEach(order => { %>
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-primary/5 hover:border-primary/20 transition-all">
+                        <div class="flex flex-col md:flex-row justify-between gap-6 mb-8 pb-6 border-b border-primary/5">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-3">
+                                    <h3 class="text-xl font-headline font-black text-primary">#<%= order._id.toString().substring(18).toUpperCase() %></h3>
+                                    <span class="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-bold rounded-full uppercase tracking-widest"><%= order.status %></span>
+                                </div>
+                                <p class="text-sm font-medium text-on-surface-variant flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">person</span>
+                                    <%= order.user ? order.user.name : 'Guest' %> • <%= order.user ? order.user.phone : '' %>
+                                </p>
+                                <p class="text-xs text-on-surface-variant opacity-60">
+                                    <%= new Date(order.createdAt).toLocaleString() %>
+                                </p>
+                            </div>
+                            <div class="flex flex-col items-end gap-3">
+                                <p class="text-3xl font-black text-primary">₹<%= order.totalAmount %></p>
+                                <div class="flex gap-2">
+                                    <select onchange="updateOrderStatus('<%= order._id %>', this.value)" class="bg-surface border-none text-xs font-bold rounded-full px-4 py-2 focus:ring-2 focus:ring-primary/20">
+                                        <option value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                        <option value="Confirmed" <%= order.status === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
+                                        <option value="Preparing" <%= order.status === 'Preparing' ? 'selected' : '' %>>Preparing</option>
+                                        <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                                        <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <% order.items.forEach(item => { %>
+                            <div class="flex items-center gap-4 bg-surface/50 p-4 rounded-2xl border border-primary/5">
+                                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
+                                    <%= item.quantity %>x
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-on-surface"><%= item.productName %></p>
+                                    <% if (item.options) { %><p class="text-[10px] font-bold text-secondary uppercase tracking-tighter">With <%= item.options %></p><% } %>
+                                    <% if (item.addons && (item.addons.extraCheese || item.addons.veggies)) { %>
+                                        <div class="flex gap-1 mt-1">
+                                            <% if (item.addons.extraCheese) { %><span class="text-[8px] bg-primary/5 text-primary px-1.5 py-0.5 rounded-full font-black">EXTRA CHEESE</span><% } %>
+                                            <% if (item.addons.veggies) { %><span class="text-[8px] bg-primary/5 text-primary px-1.5 py-0.5 rounded-full font-black">VEGGIES</span><% } %>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="flex flex-col items-center justify-center py-40 text-center space-y-4">
+                        <div class="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center">
+                            <span class="material-symbols-outlined text-5xl text-outline">inbox_customize</span>
+                        </div>
+                        <h3 class="text-xl font-bold">No orders yet</h3>
+                        <p class="text-on-surface-variant max-w-xs">New orders from customers will appear here automatically.</p>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const res = await fetch('/admin/orders/update-status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderId, status })
+                });
+                if(res.ok) {
+                    location.reload();
+                } else {
+                    alert('Error updating status');
+                }
+            } catch(e) { console.error(e); }
+        }
+    </script>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+</body>
+</html>

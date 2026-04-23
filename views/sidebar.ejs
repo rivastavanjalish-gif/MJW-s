@@ -1,0 +1,92 @@
+<!-- Sidebar Navigation Drawer Overlay -->
+<div id="mobile-sidebar" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm transition-opacity" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');"></div>
+    
+    <!-- NavigationDrawer Component -->
+    <aside class="relative bg-white/95 backdrop-blur-2xl h-full w-80 rounded-r-[3rem] border-none flex flex-col py-10 gap-4 shadow-[30px_0_60px_rgba(59,30,84,0.1)] transition-all duration-500 transform translate-x-0 overflow-y-auto border-r border-primary/5">
+        <!-- Close Button -->
+        <button onclick="document.getElementById('mobile-sidebar').classList.add('hidden');" class="absolute top-6 right-6 text-primary hover:scale-110 transition-transform active:scale-95">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <!-- Brand Header -->
+        <div class="px-8 mb-8 mt-2">
+            <span class="text-2xl font-black text-[#733CC3] dark:text-[#B497E0] tracking-tighter uppercase font-headline">MJW's Shake & Spicy</span>
+        </div>
+
+        <% if (locals.user) { %>
+        <!-- User Profile Section -->
+        <div class="px-6 mb-10 flex items-center gap-4">
+            <div class="relative h-14 w-14 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-2xl shadow-lg border-2 border-primary-container">
+                <%= user.name ? user.name.charAt(0).toUpperCase() : 'U' %>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-headline font-bold text-lg text-on-surface leading-tight"><%= user.name || user.phone %></span>
+                <span class="text-xs text-secondary font-medium tracking-wide">Member</span>
+                <div class="mt-1 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px] text-tertiary">shopping_cart</span>
+                    <span class="text-[10px] font-bold text-on-surface-variant">Cart: <%= locals.cartCount || 0 %> items</span>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 space-y-2">
+            <a class="flex items-center gap-4 text-[#3B1E54] hover:text-primary mx-4 py-4 px-8 hover:bg-[#F0E8FF] transition-all duration-500 rounded-full font-headline font-bold group" href="/">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="home">home</span>
+                <span>Home</span>
+            </a>
+            
+            <a class="flex items-center gap-4 text-[#3B1E54] hover:text-primary mx-4 py-4 px-8 hover:bg-[#F0E8FF] transition-all duration-500 rounded-full font-headline font-bold group" href="/menu">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="restaurant_menu">restaurant_menu</span>
+                <span>Menu</span>
+            </a>
+            
+            <a class="flex items-center justify-between text-stone-600 dark:text-stone-400 mx-4 py-3 px-6 hover:bg-[#F0E8FF] dark:hover:bg-stone-800 transition-all duration-300 rounded-full font-headline font-bold" href="/cart">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+                    <span>Cart</span>
+                </div>
+                <% if (locals.cartCount > 0) { %>
+                    <span class="bg-primary text-on-primary text-[10px] px-2 py-0.5 rounded-full"><%= cartCount %></span>
+                <% } %>
+            </a>
+
+            <% if (locals.user && locals.user.email === locals.adminEmail) { %>
+            <a class="flex items-center gap-4 text-stone-600 dark:text-stone-400 mx-4 py-4 px-8 hover:bg-[#F0E8FF] transition-all duration-500 rounded-full font-headline font-bold group" href="/admin">
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="admin_panel_settings">admin_panel_settings</span>
+                <span>Admin Dashboard</span>
+            </a>
+            <% } %>
+        </nav>
+
+        <!-- Login / Logout -->
+        <div class="pt-4 border-t border-outline-variant/10 mt-auto">
+            <% if (locals.user) { %>
+            <a class="flex items-center gap-4 text-stone-600 dark:text-stone-400 mx-4 py-3 px-6 hover:bg-[#F0E8FF] dark:hover:bg-stone-800 transition-all duration-300 rounded-full font-headline font-bold" href="/user">
+                <span class="material-symbols-outlined" data-icon="person">person</span>
+                <span>Profile</span>
+            </a>
+            <button class="w-[calc(100%-2rem)] flex items-center gap-4 text-stone-600 dark:text-stone-400 mx-4 py-3 px-6 hover:bg-error-container/20 hover:text-error transition-all duration-300 rounded-full font-headline font-bold" onclick="handleLogout()">
+                <span class="material-symbols-outlined" data-icon="logout">logout</span>
+                <span>Logout</span>
+            </button>
+            <script>
+                async function handleLogout() {
+                    const btn = event.currentTarget;
+                    btn.classList.add('scale-95', 'opacity-50');
+                    await fetch('/api/auth/logout', { method: 'POST' });
+                    window.location.reload();
+                }
+            </script>
+            <% } else { %>
+            <a class="flex items-center gap-4 text-stone-600 dark:text-stone-400 mx-4 py-3 px-6 hover:bg-[#F0E8FF] dark:hover:bg-stone-800 transition-all duration-300 rounded-full font-headline font-bold" href="/login">
+                <span class="material-symbols-outlined" data-icon="login">login</span>
+                <span>Login</span>
+            </a>
+            <% } %>
+        </div>
+    </aside>
+</div>

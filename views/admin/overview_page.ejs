@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MJW'S SHAKE & SPICY - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#733CC3",
+                        "primary-dim": "#5A28A0",
+                        "secondary": "#9D79D3",
+                        "on-surface": "#3B1E54",
+                        "on-surface-variant": "#6B6B6B",
+                        "surface": "#F8F7FB",
+                        "surface-container": "#F0E8FF",
+                        "surface-container-low": "#F8F7FB",
+                        "surface-container-highest": "#B497E0",
+                        "surface-container-lowest": "#FFFFFF",
+                        "tertiary": "#C48F00",
+                        "outline": "#9D79D3",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #733CC344; border-radius: 10px; }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+    <%- include('dashboard_sidebar') %>
+
+    <div class="lg:ml-72 min-h-screen">
+        <!-- TopBar -->
+        <header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-xl px-8 py-6 flex justify-between items-center border-b border-primary/5">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden p-2 text-primary" onclick="toggleSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="text-2xl font-headline font-black text-primary">Overview</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs font-bold text-secondary uppercase tracking-widest">System Status</p>
+                    <p class="text-[10px] font-medium text-green-600 flex items-center justify-end gap-1">
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> Live
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-8 space-y-8">
+            <!-- Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-primary/5 flex items-center gap-6">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined text-3xl">shopping_cart</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-secondary uppercase tracking-widest">Total Orders</p>
+                        <p class="text-3xl font-black"><%= totalOrders %></p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-primary/5 flex items-center gap-6">
+                    <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-green-600">
+                        <span class="material-symbols-outlined text-3xl">payments</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-secondary uppercase tracking-widest">Revenue</p>
+                        <p class="text-3xl font-black">₹<%= totalRevenue.toLocaleString() %></p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-primary/5 flex items-center gap-6">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined text-3xl">group</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-secondary uppercase tracking-widest">Customers</p>
+                        <p class="text-3xl font-black"><%= totalUsers %></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="bg-white rounded-3xl shadow-sm border border-primary/5 overflow-hidden">
+                <div class="p-8 border-b border-primary/5 flex justify-between items-center">
+                    <h2 class="text-xl font-headline font-bold">Recent Activities</h2>
+                    <a href="/admin/orders" class="text-sm font-bold text-primary hover:underline">View All Orders</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-surface text-[10px] font-bold uppercase tracking-widest text-secondary">
+                                <th class="px-8 py-4">Order ID</th>
+                                <th class="px-8 py-4">Customer</th>
+                                <th class="px-8 py-4">Amount</th>
+                                <th class="px-8 py-4">Status</th>
+                                <th class="px-8 py-4 text-right">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-primary/5">
+                            <% orders.forEach(order => { %>
+                            <tr class="hover:bg-surface/50 transition-colors">
+                                <td class="px-8 py-5 font-bold text-sm text-primary">#<%= order._id.toString().substring(18).toUpperCase() %></td>
+                                <td class="px-8 py-5 font-medium"><%= order.user ? order.user.name : 'Guest' %></td>
+                                <td class="px-8 py-5 font-black">₹<%= order.totalAmount %></td>
+                                <td class="px-8 py-5">
+                                    <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase 
+                                        <%= order.status === 'Delivered' ? 'bg-green-100 text-green-600' : 
+                                           order.status === 'Cancelled' ? 'bg-red-100 text-red-600' : 
+                                           'bg-secondary/10 text-secondary' %>">
+                                        <%= order.status %>
+                                    </span>
+                                </td>
+                                <td class="px-8 py-5 text-right text-xs text-on-surface-variant">
+                                    <%= new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Menu | MJW'S SHAKE &amp; SPICY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be_Vietnam_Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="/js/toast.js" defer></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#FF6B3D",
+                        "inverse-on-surface": "#6B6B6B",
+                        "primary-fixed-dim": "#B497E0",
+                        "secondary-fixed-dim": "#F0E8FF",
+                        "surface-bright": "#F8F7FB",
+                        "surface-container": "#F0E8FF",
+                        "on-secondary-fixed": "#3B1E54",
+                        "tertiary-dim": "#F4C542",
+                        "surface": "#F8F7FB",
+                        "secondary-dim": "#F0E8FF",
+                        "outline": "#9D79D3",
+                        "tertiary-fixed-dim": "#F4C542",
+                        "surface-container-high": "#F0E8FF",
+                        "on-background": "#3B1E54",
+                        "background": "#F8F7FB",
+                        "tertiary-fixed": "#C48F00",
+                        "surface-container-lowest": "#FFFFFF",
+                        "primary-container": "#B497E0",
+                        "on-error": "#FFFFFF",
+                        "on-tertiary-fixed": "#3B1E54",
+                        "primary": "#733CC3",
+                        "error-dim": "#FF6B3D",
+                        "surface-dim": "#B497E0",
+                        "on-tertiary-container": "#3B1E54",
+                        "on-primary-fixed": "#FFFFFF",
+                        "tertiary": "#C48F00",
+                        "inverse-primary": "#733CC3",
+                        "surface-tint": "#733CC3",
+                        "primary-fixed": "#B497E0",
+                        "inverse-surface": "#3B1E54",
+                        "on-surface": "#3B1E54",
+                        "on-secondary-container": "#3B1E54",
+                        "on-surface-variant": "#6B6B6B",
+                        "surface-container-highest": "#B497E0",
+                        "secondary": "#9D79D3",
+                        "on-primary-fixed-variant": "#B497E0",
+                        "tertiary-container": "#C48F00",
+                        "on-tertiary": "#3B1E54",
+                        "error": "#FF6B3D",
+                        "secondary-fixed": "#9D79D3",
+                        "on-error-container": "#3B1E54",
+                        "on-tertiary-fixed-variant": "#3B1E54",
+                        "primary-dim": "#5A28A0",
+                        "on-primary-container": "#FFFFFF",
+                        "on-secondary-fixed-variant": "#3B1E54",
+                        "secondary-container": "#F0E8FF",
+                        "outline-variant": "#733CC3",
+                        "on-secondary": "#3B1E54",
+                        "surface-container-low": "#F8F7FB",
+                        "surface-variant": "#B497E0",
+                        "on-primary": "#FFFFFF"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    /* Custom Toggle Styles */
+    .toggle-checkbox:checked + .toggle-label {
+        background-color: #733CC3 !important; /* Primary Theme Color */
+    }
+    .toggle-checkbox:checked ~ .toggle-dot {
+        transform: translateX(1.5rem);
+        border-color: white;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 rounded-b-[2rem] bg-[#F8F7FB]/80 dark:bg-stone-900/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(59,30,84,0.04)]">
+<div class="flex justify-between items-center px-8 py-6 w-full">
+<div class="flex items-center gap-4">
+<button onclick="document.getElementById('mobile-sidebar').classList.remove('hidden')" class="text-[#733CC3] dark:text-[#B497E0] hover:scale-105 transition-transform duration-300 active:scale-95">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 onclick="window.location.href='/'" class="cursor-pointer text-2xl font-black italic text-[#733CC3] dark:text-[#B497E0] font-headline tracking-tight">MJW'S SHAKE &amp; SPICY</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 font-headline font-bold items-center">
+<a class="text-[#3B1E54] dark:text-[#F0E8FF] hover:scale-105 transition-all" href="/">Home</a>
+<a class="text-[#733CC3] dark:text-[#B497E0] hover:scale-105 transition-all" href="/menu">Menu</a>
+<a class="text-[#3B1E54] dark:text-[#F0E8FF] hover:scale-105 transition-all" href="/#about">Our Story</a>
+<% if (user) { %>
+<a href="/user" class="flex items-center gap-2 bg-primary-container/20 dark:bg-stone-800 px-3 py-1.5 rounded-full hover:scale-105 transition-transform duration-300 active:scale-95 cursor-pointer">
+    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold"><%= user.name ? user.name.charAt(0).toUpperCase() : 'U' %></div>
+    <span class="font-bold text-primary dark:text-primary-fixed truncate max-w-[100px]"><%= user.name || 'Profile' %></span>
+</a>
+<% } else { %>
+<a class="px-6 py-2 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-bold hover:scale-105 transition-transform duration-300 active:scale-95 shadow-lg" href="/login">Login</a>
+<% } %>
+</nav>
+
+</div>
+</div>
+</header>
+<main class="pt-32 pb-20">
+<!-- Category Jump Links (Horizontal Scroll) -->
+<div class="sticky top-24 z-40 bg-surface/90 backdrop-blur-md pb-4">
+<div class="max-w-7xl mx-auto px-6">
+    <div id="category-nav" class="flex overflow-x-auto gap-4 py-4 hide-scrollbar">
+        <a class="category-link whitespace-nowrap px-8 py-3 bg-gradient-to-br from-[#733CC3] to-[#B497E0] text-white rounded-full font-headline font-semibold shadow-lg hover:scale-105 transition-all duration-300" href="#Shakes" data-category="Shakes">Shakes</a>
+        <a class="category-link whitespace-nowrap px-8 py-3 bg-white/50 border border-primary/5 text-[#3B1E54] rounded-full font-headline font-semibold hover:bg-white hover:scale-105 transition-all duration-300" href="#Snacks" data-category="Snacks">Snacks</a>
+        <a class="category-link whitespace-nowrap px-8 py-3 bg-white/50 border border-primary/5 text-[#3B1E54] rounded-full font-headline font-semibold hover:bg-white hover:scale-105 transition-all duration-300" href="#Sandwiches" data-category="Sandwiches">Sandwiches</a>
+        <a class="category-link whitespace-nowrap px-8 py-3 bg-white/50 border border-primary/5 text-[#3B1E54] rounded-full font-headline font-semibold hover:bg-white hover:scale-105 transition-all duration-300" href="#Burgers" data-category="Burgers">Burgers</a>
+        <a class="category-link whitespace-nowrap px-8 py-3 bg-white/50 border border-primary/5 text-[#3B1E54] rounded-full font-headline font-semibold hover:bg-white hover:scale-105 transition-all duration-300" href="#Pizza" data-category="Pizza">Pizza</a>
+    </div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 space-y-24">
+<!-- Shakes Section -->
+<section class="scroll-mt-48" id="Shakes">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<span class="text-tertiary font-bold tracking-widest uppercase text-sm block mb-2">Thick &amp; Creamy</span>
+<h2 class="text-5xl font-headline font-extrabold text-primary tracking-tight">Our Signature Shakes</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+<% shakes.forEach(product => { %>
+    <div class="group bg-white p-6 rounded-[2.5rem] hover:shadow-[0_30px_60px_rgba(59,30,84,0.1)] transition-all duration-700 border border-primary/5 flex flex-col">
+        <div class="aspect-square mb-6 overflow-hidden rounded-[2rem] bg-surface-container">
+            <img src="<%= product.imageUrl || 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' %>" 
+                 data-alt="<%= product.name %>"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 <%= !product.isAvailable ? 'grayscale opacity-50' : '' %>">
+        </div>
+        <div class="flex justify-between items-start mb-2 <%= !product.isAvailable ? 'opacity-50' : '' %>">
+            <h3 class="font-headline font-bold text-xl text-on-surface"><%= product.name %></h3>
+            <span id="price-<%= product._id %>" class="text-primary font-black">₹<%= product.price %></span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-4 <%= !product.isAvailable ? 'opacity-50' : '' %>"><%= product.description || 'Velvety smooth, blended with premium fresh ingredients.' %></p>
+        
+        <% if (product.hasOptions) { %>
+        <div class="flex items-center justify-between bg-surface-container-low p-3 rounded-lg mb-6 <%= !product.isAvailable ? 'opacity-50 pointer-events-none' : '' %>">
+            <span class="text-xs font-bold text-secondary uppercase tracking-tighter"><%= product.optionDetails.name %></span>
+            <label for="<%= product._id %>-toggle" class="flex items-center cursor-pointer select-none">
+                <div class="relative">
+                    <input type="checkbox" id="<%= product._id %>-toggle" class="sr-only toggle-checkbox" onchange="const p = document.getElementById('price-<%= product._id %>'); p.innerText = this.checked ? '₹<%= product.price + product.optionDetails.priceIncrease %>' : '₹<%= product.price %>';">
+                    <div class="toggle-label block bg-[#E2D9F3] w-12 h-6 rounded-full transition-all duration-300"></div>
+                    <div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-all duration-300 border border-outline-variant/20 shadow-sm"></div>
+                </div>
+                <span class="ml-2 text-[10px] font-bold text-on-surface-variant">+₹<%= product.optionDetails.priceIncrease %></span>
+            </label>
+        </div>
+        <% } %>
+
+        <% if (product.isAvailable) { %>
+            <button onclick="addToCart('<%= product._id %>', document.getElementById('<%= product._id %>-toggle') && document.getElementById('<%= product._id %>-toggle').checked ? '<%= product.optionDetails.name %>' : '')" class="w-full mt-auto py-3 rounded-full bg-primary text-white font-bold hover:bg-primary-dim transition-all active:scale-95 shadow-lg shadow-primary/20">Add to Order</button>
+        <% } else { %>
+            <button class="w-full mt-auto py-3 rounded-full bg-stone-200 text-stone-500 font-bold cursor-not-allowed" disabled>Unavailable</button>
+        <% } %>
+    </div>
+<% }) %>
+</div>
+</section>
+<!-- Snacks (Patties) Section -->
+<section class="scroll-mt-48" id="Snacks">
+<div class="bg-white rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-[0_20px_40px_rgba(59,30,84,0.03)] border border-primary/5">
+<div class="relative z-10">
+<span class="text-secondary font-bold tracking-widest uppercase text-sm block mb-2">Crispy Delights</span>
+<h2 class="text-4xl font-headline font-extrabold text-on-surface mb-10">Savory Patties</h2>
+<div class="grid md:grid-cols-2 gap-x-16 gap-y-6">
+<% snacks.forEach(product => { %>
+<div class="flex justify-between items-center py-4 border-b border-outline-variant/20 group <%= !product.isAvailable ? 'opacity-50' : '' %>">
+<div>
+<span class="font-bold text-lg block"><%= product.name %></span>
+<span class="text-primary font-black">₹<%= product.price %></span>
+</div>
+<% if (product.isAvailable) { %>
+    <button onclick="addToCart('<%= product._id %>', '')" class="px-6 py-2 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary-dim transition-all active:scale-95">Add to Order</button>
+<% } else { %>
+    <button class="px-6 py-2 rounded-full bg-stone-200 text-stone-500 text-sm font-bold cursor-not-allowed" disabled>Unavailable</button>
+<% } %>
+</div>
+<% }) %>
+</div>
+</div>
+</div>
+</section>
+<!-- Sandwiches & Burgers Bento -->
+<div class="grid lg:grid-cols-2 gap-12">
+<!-- Sandwiches -->
+<section class="scroll-mt-48 space-y-8" id="Sandwiches">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="lunch_dining">lunch_dining</span>
+<h2 class="text-3xl font-headline font-extrabold text-on-surface">Grilled Sandwiches</h2>
+</div>
+<div class="space-y-4">
+<% sandwiches.forEach(product => { %>
+<div class="p-6 bg-white rounded-[2rem] border border-primary/5 flex justify-between items-center hover:shadow-[0_15px_30px_rgba(59,30,84,0.05)] transition-all duration-500 group <%= !product.isAvailable ? 'opacity-50' : '' %>">
+<div>
+<div class="font-bold text-lg"><%= product.name %></div>
+<div class="text-primary font-black text-xl">₹<%= product.price %></div>
+</div>
+<% if (product.isAvailable) { %>
+    <button onclick="addToCart('<%= product._id %>', '')" class="px-6 py-2 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary-dim transition-all active:scale-95">Add to Order</button>
+<% } else { %>
+    <button class="px-6 py-2 rounded-full bg-stone-200 text-stone-500 text-sm font-bold cursor-not-allowed" disabled>Unavailable</button>
+<% } %>
+</div>
+<% }) %>
+</div>
+</section>
+<!-- Burgers -->
+<section class="scroll-mt-48 space-y-8" id="Burgers">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="dinner_dining">dinner_dining</span>
+<h2 class="text-3xl font-headline font-extrabold text-on-surface">Burger Central</h2>
+</div>
+<div class="space-y-4">
+<% burgers.forEach(product => { %>
+<div class="p-8 bg-white rounded-[2rem] border border-primary/5 group hover:shadow-[0_20px_40px_rgba(59,30,84,0.08)] transition-all duration-500 <%= !product.isAvailable ? 'opacity-50' : '' %>">
+<div class="flex justify-between items-start mb-2">
+<div>
+<div class="font-bold text-lg"><%= product.name %></div>
+<div class="text-primary font-black text-xl">₹<%= product.price %></div>
+</div>
+<% if (product.isAvailable) { %>
+    <button onclick="addToCart('<%= product._id %>', '')" class="px-6 py-2 rounded-full bg-primary text-white text-sm font-bold hover:bg-primary-dim transition-all active:scale-95">Add to Order</button>
+<% } else { %>
+    <button class="px-6 py-2 rounded-full bg-stone-200 text-stone-500 text-sm font-bold cursor-not-allowed" disabled>Unavailable</button>
+<% } %>
+</div>
+<p class="text-sm text-on-surface-variant max-w-[70%]"><%= product.description || '' %></p>
+</div>
+<% }) %>
+</div>
+</section>
+</div>
+<!-- Pizza Section -->
+<section class="relative scroll-mt-48 my-40 overflow-hidden rounded-[5rem] shadow-[0_40px_80px_rgba(59,30,84,0.15)]" id="Pizza">
+    <!-- High-End Background Layer -->
+    <div class="absolute inset-0 z-0">
+        <img class="w-full h-full object-cover brightness-[0.5] saturate-[0.8]" 
+             src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+             alt="Gourmet Wood-Fired Pizza">
+        <!-- Premium Overlays -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#3B1E54] via-[#3B1E54]/85 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#3B1E54]/20 via-transparent to-transparent"></div>
+    </div>
+
+    <!-- Content Container (Ultra-Glassmorphism) -->
+    <div class="relative z-10 grid lg:grid-cols-2 items-center">
+        <div class="p-12 lg:p-28 space-y-12 backdrop-blur-xl bg-white/5 border-r border-white/10 h-full flex flex-col justify-center">
+            <div>
+                <div class="inline-flex items-center gap-3 px-4 py-2 bg-primary/20 backdrop-blur-md rounded-full border border-primary/30 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                    <span class="text-white font-black tracking-[0.2em] uppercase text-[10px]">Artisan Series</span>
+                </div>
+                <h2 class="text-5xl font-headline font-black text-white mb-6 leading-[0.9] tracking-tighter">Artisan<br><span class="text-primary-fixed">Wood-Fired</span></h2>
+                <div class="flex flex-wrap gap-4">
+                    <span class="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-xl text-[10px] font-bold flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-yellow-400"></span> Extra Cheese: ₹30
+                    </span>
+                    <span class="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-xl text-[10px] font-bold flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-400"></span> Veggies: ₹20
+                    </span>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <% pizza.forEach(product => { %>
+                <div class="flex flex-col group border-b border-white/5 pb-10 last:border-0 <%= !product.isAvailable ? 'opacity-40' : '' %>">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-headline text-white group-hover:text-primary-fixed transition-colors"><%= product.name %></span>
+                            <span class="font-black text-xl text-primary-fixed mt-1">₹<%= product.price %></span>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-2xl p-4 rounded-[2rem] border border-white/10 space-y-4 min-w-[200px] <%= !product.isAvailable ? 'pointer-events-none' : '' %>">
+                            <div class="flex items-center justify-between gap-6">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-white/60">Extra Cheese</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="cheese-<%= product._id %>" class="sr-only toggle-checkbox">
+                                    <div class="toggle-label block bg-white/10 w-10 h-5 rounded-full transition-all duration-300"></div>
+                                    <div class="toggle-dot absolute left-0.5 top-0.5 bg-white w-4 h-4 rounded-full transition-all duration-300 shadow-sm"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between gap-6">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-white/60">Veggies</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="veggies-<%= product._id %>" class="sr-only toggle-checkbox">
+                                    <div class="toggle-label block bg-white/10 w-10 h-5 rounded-full transition-all duration-300"></div>
+                                    <div class="toggle-dot absolute left-0.5 top-0.5 bg-white w-4 h-4 rounded-full transition-all duration-300 shadow-sm"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <% if (product.isAvailable) { %>
+                        <button onclick="addToCart('<%= product._id %>', '', { extraCheese: document.getElementById('cheese-<%= product._id %>').checked, veggies: document.getElementById('veggies-<%= product._id %>').checked })" class="w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-black hover:scale-[1.02] transition-all active:scale-95 shadow-2xl shadow-primary/20">Add to Order</button>
+                    <% } else { %>
+                        <button class="w-full py-4 rounded-full bg-white/5 text-white/30 font-black cursor-not-allowed border border-white/5" disabled>Unavailable</button>
+                    <% } %>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+        <!-- Right side empty for background image focus on desktop -->
+        <div class="hidden lg:flex items-center justify-center">
+            <div class="p-8 bg-white/5 backdrop-blur-md rounded-[3rem] border border-white/10 animate-float">
+                <div class="flex flex-col items-center text-center">
+                    <span class="material-symbols-outlined text-primary-fixed text-5xl mb-4">potted_plant</span>
+                    <span class="text-white font-headline font-black text-2xl">100% Fresh<br>Ingredients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+</style>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto rounded-t-[3rem] bg-[#F0E8FF] dark:bg-stone-900">
+<div class="w-full px-12 py-16 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="font-headline font-bold text-[#733CC3] text-xl">MJW'S SHAKE &amp; SPICY</span>
+<p class="font-['Be_Vietnam_Pro'] text-sm tracking-wide text-[#3B1E54] dark:text-[#6B6B6B] opacity-80">© 2024 MJW'S SHAKE &amp; SPICY. Stay Kinetic.</p>
+</div>
+</div>
+</footer>
+<!-- FAB Cart -->
+<button onclick="window.location.href='/cart'" class="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-primary to-primary-container text-white rounded-full flex items-center justify-center shadow-[0_20px_40px_rgba(50,46,37,0.2)] hover:scale-110 transition-transform active:scale-95 z-50">
+<span class="material-symbols-outlined" data-icon="shopping_basket" style="font-variation-settings: 'FILL' 1;">shopping_basket</span>
+<span id="cart-badge" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-6 h-6 rounded-full flex items-center justify-center border-2 border-surface"><%= cartCount %></span>
+</button>
+
+<script>
+async function addToCart(productId, options, addons = null) {
+    try {
+        const res = await fetch('/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId, options, addons })
+        });
+        const data = await res.json();
+        if(res.ok) {
+            // Find product name for toast
+            let productName = "Item";
+            const productTitleElement = document.querySelector(`[id="price-${productId}"]`)?.previousElementSibling;
+            if (productTitleElement) productName = productTitleElement.innerText;
+
+            // Format addon message
+            let addonMsg = options ? `${options}` : "";
+            if (addons) {
+                const parts = [];
+                if (addons.extraCheese) parts.push("Extra Cheese");
+                if (addons.veggies) parts.push("Veggies");
+                if (parts.length > 0) addonMsg += (addonMsg ? " + " : "") + parts.join(", ");
+            }
+
+            showToast(`${productName} added!`, addonMsg || "Added to your order", "success");
+
+            // Update cart count dynamically
+            const badge = document.getElementById('cart-badge');
+            if (badge) {
+                const currentCount = parseInt(badge.innerText) || 0;
+                badge.innerText = currentCount + 1;
+            }
+
+            // Reset pizza toggles if they exist
+            const cheeseToggle = document.getElementById(`cheese-${productId}`);
+            const veggiesToggle = document.getElementById(`veggies-${productId}`);
+            if(cheeseToggle) cheeseToggle.checked = false;
+            if(veggiesToggle) veggiesToggle.checked = false;
+            
+        } else {
+            if(data.error === 'Unauthorized') window.location.href = '/login';
+            else showToast("Error", data.error, "error");
+        }
+    } catch(e) { 
+        console.error(e);
+        showToast("Error", "Failed to add item", "error");
+    }
+}
+</script>
+<%- include('sidebar') %>
+<script>
+    // Precision Category Highlighting Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.category-link');
+        const navContainer = document.getElementById('category-nav');
+        
+        // Track visibility of all sections
+        const visibilityMap = new Map();
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -40% 0px',
+            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        };
+
+        const updateActiveLink = () => {
+            let maxRatio = -1;
+            let activeId = null;
+
+            visibilityMap.forEach((ratio, id) => {
+                if (ratio > maxRatio) {
+                    maxRatio = ratio;
+                    activeId = id;
+                }
+            });
+
+            if (activeId) {
+                navLinks.forEach(link => {
+                    const isTarget = link.getAttribute('data-category') === activeId;
+                    if (isTarget) {
+                        link.classList.remove('bg-white/50', 'text-[#3B1E54]', 'border-primary/5');
+                        link.classList.add('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white', 'shadow-lg', 'scale-105');
+                        
+                        // Precise horizontal centering in nav bar
+                        const containerWidth = navContainer.offsetWidth;
+                        const linkOffset = link.offsetLeft;
+                        const linkWidth = link.offsetWidth;
+                        const scrollPos = linkOffset - (containerWidth / 2) + (linkWidth / 2);
+                        
+                        navContainer.scrollTo({
+                            left: scrollPos,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        link.classList.add('bg-white/50', 'text-[#3B1E54]', 'border-primary/5');
+                        link.classList.remove('bg-gradient-to-br', 'from-[#733CC3]', 'to-[#B497E0]', 'text-white', 'shadow-lg', 'scale-105');
+                    }
+                });
+            }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                visibilityMap.set(entry.target.id, entry.intersectionRatio);
+            });
+            
+            // Batch update using requestAnimationFrame for smoothness
+            requestAnimationFrame(updateActiveLink);
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    });
+</script>
+</body>
+</html>
