@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
     "connect-mongo": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -19,7 +20,6 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "mongoose": "^9.4.1",
-    "nodemailer": "^8.0.5",
     "razorpay": "^2.9.6"
   }
 }

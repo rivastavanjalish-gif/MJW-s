@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
@@ -13,26 +13,10 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
-// Email Transporter Setup
-const transporter = nodemailer.createTransport(
-    process.env.EMAIL_HOST
-        ? {
-            host: process.env.EMAIL_HOST,
-            port: Number(process.env.EMAIL_PORT || 587),
-            secure: process.env.EMAIL_SECURE === 'true',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        }
-        : {
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        }
-);
+// SendGrid Setup
+if (process.env.SENDGRID_API_KEY) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 // Temporary in-memory store for OTPs
 const otpStore = {};
@@ -105,9 +89,12 @@ router.post('/auth/send-otp', async (req, res) => {
     };
     
     // Send Real Email
-    const mailOptions = {
-        from: `"${process.env.EMAIL_FROM_NAME || "MJW's Shake & Spicy"}" <${process.env.EMAIL_USER}>`,
+    const msg = {
         to: email,
+        from: {
+            email: process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER,
+            name: process.env.EMAIL_FROM_NAME || "MJW's Shake & Spicy"
+        },
         subject: user
             ? `Your MJW's login OTP is here`
             : `Welcome to MJW's Shake & Spicy - verify your email`,
@@ -119,24 +106,26 @@ router.post('/auth/send-otp', async (req, res) => {
     };
 
     try {
-        // Only attempt to send real email if credentials are changed from placeholders
-        if (process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.EMAIL_USER !== 'your-email@gmail.com') {
-            await transporter.sendMail(mailOptions);
-            console.log(`[SYSTEM] Real OTP sent to ${email}`);
+        if (process.env.SENDGRID_API_KEY) {
+            await sgMail.send(msg);
+            console.log(`[SYSTEM] OTP sent to ${email} via SendGrid`);
             return res.json({ success: true, message: 'OTP sent to your email', isNewUser: !user });
         }
 
-        console.warn(`[DEVELOPMENT MODE] Email credentials not configured. OTP for ${email}: ${otp}`);
+        console.warn(`[DEVELOPMENT MODE] SENDGRID_API_KEY not configured. OTP for ${email}: ${otp}`);
         return res.json({ 
             success: true, 
-            message: 'Development mode active. Configure email credentials to send real OTP emails.',
+            message: 'Development mode active. Configure SendGrid API key to send real OTP emails.',
             isNewUser: !user,
             devMode: true 
         });
     } catch (error) {
         console.error('Email Delivery Failed:', error.message);
+        if (error.response) {
+            console.error('SendGrid Error Body:', error.response.body);
+        }
         res.status(500).json({ 
-            error: 'We could not send the OTP email right now. Please check your email configuration and try again.'
+            error: 'We could not send the OTP email right now. Please check your SendGrid configuration and try again.'
         });
     }
 });
